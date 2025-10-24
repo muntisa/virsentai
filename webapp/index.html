@@ -1,0 +1,393 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Viral Sentry AI</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      /* CSS for the flashing effect - DURATION CHANGED TO 3s */
+      @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0.2; }
+        100% { opacity: 1; }
+      }
+      .flash {
+        animation: blink 3s linear infinite;
+      }
+    </style>
+    <script>      // Data from summary_stats.json embedded directly
+      const summaryStats = {
+          "Total Scanned Viruses": 21210,
+          "Zoonotic Viruses": 214,
+          "Monthly New Cases": {
+                    "2025-05": 1,
+                    "2025-06": 3,
+                    "2025-07": 71,
+                    "2025-08": 81,
+                    "2025-09": 37,
+                    "2025-10": 21
+          },
+          "Top Predictions": [
+                    {
+                              "Virus ID": "NC_043270.1",
+                              "Virus Name": "Bracoviriform inaniti",
+                              "Virus Host": "Unknown",
+                              "Database": "NCBI",
+                              "Probability": 0.9883,
+                              "Scan Date": "2025-08-26"
+                    },
+                    {
+                              "Virus ID": "PQ007151.1",
+                              "Virus Name": "Bajarodmic virus 902 isolate BGG_084_19, complete genome",
+                              "Virus Host": "Unknown",
+                              "Database": "VirusHostDB",
+                              "Probability": 0.9846,
+                              "Scan Date": "2025-07-19"
+                    },
+                    {
+                              "Virus ID": "PQ006958.1",
+                              "Virus Name": "Bajarodmic virus 735 isolate BGG_079_124, complete genome",
+                              "Virus Host": "Unknown",
+                              "Database": "VirusHostDB",
+                              "Probability": 0.9828,
+                              "Scan Date": "2025-08-17"
+                    },
+                    {
+                              "Virus ID": "NC_006502.1",
+                              "Virus Name": "Isavirus salaris",
+                              "Virus Host": "Unknown",
+                              "Database": "NCBI",
+                              "Probability": 0.9815,
+                              "Scan Date": "2025-09-03"
+                    },
+                    {
+                              "Virus ID": "NC_043126.1",
+                              "Virus Name": "Longquan virus",
+                              "Virus Host": "Unknown",
+                              "Database": "NCBI",
+                              "Probability": 0.98,
+                              "Scan Date": "2025-07-01"
+                    },
+                    {
+                              "Virus ID": "NC_043363.1",
+                              "Virus Name": "Choristoneura fumiferana entomopoxvirus",
+                              "Virus Host": "Unknown",
+                              "Database": "NCBI",
+                              "Probability": 0.979,
+                              "Scan Date": "2025-09-23"
+                    },
+                    {
+                              "Virus ID": "NC_074760.1",
+                              "Virus Name": "Heterocapsa circularisquama DNA virus 01",
+                              "Virus Host": "Unknown",
+                              "Database": "NCBI",
+                              "Probability": 0.9768,
+                              "Scan Date": "2025-07-16"
+                    },
+                    {
+                              "Virus ID": "MN311493.1",
+                              "Virus Name": "Antarctic microvirus TYR_006_V_SP_13, complete genome",
+                              "Virus Host": "Unknown",
+                              "Database": "VirusHostDB",
+                              "Probability": 0.9767,
+                              "Scan Date": "2025-07-06"
+                    },
+                    {
+                              "Virus ID": "AB447448.1",
+                              "Virus Name": "Norovirus Hu/GII-4/Sakai2/2006/JP genomic RNA, complete genome",
+                              "Virus Host": "Unknown",
+                              "Database": "VirusHostDB",
+                              "Probability": 0.9763,
+                              "Scan Date": "2025-09-16"
+                    },
+                    {
+                              "Virus ID": "NC_001753.1",
+                              "Virus Name": "Clover yellow mosaic virus, complete genome",
+                              "Virus Host": "Unknown",
+                              "Database": "VirusHostDB",
+                              "Probability": 0.9763,
+                              "Scan Date": "2025-07-25"
+                    }
+          ]
+};// Function to populate the data on window load
+      window.onload = function() {
+        // Populate stats
+        // Note: 'Total Scanned Viruses' is used in JSON but displayed as 'Scanned Viruses'
+        document.getElementById('total-scanned').textContent = summaryStats['Total Scanned Viruses'].toLocaleString();
+        document.getElementById('zoonotic-viruses').textContent = summaryStats['Zoonotic Viruses'].toLocaleString();
+        // Set the Zoonotic Viruses number to red to suggest danger
+        document.getElementById('zoonotic-viruses').classList.remove('text-white');
+        document.getElementById('zoonotic-viruses').classList.add('text-[#ff0000]');
+
+        // Populate Top Prediction
+        const topPrediction = summaryStats['Top Predictions'][0];
+        
+        // Populate the Virus ID link for the Top Prediction
+        const topPredictionLink = document.getElementById('top-prediction-link');
+        const virusID = topPrediction['Virus ID'];
+        topPredictionLink.href = `https://www.ncbi.nlm.nih.gov/search/all/?term=${virusID}`;
+        topPredictionLink.textContent = virusID;
+
+        document.getElementById('top-prediction-name').textContent = topPrediction['Virus Name'];
+        document.getElementById('top-prediction-probability').textContent = `${(topPrediction.Probability * 100).toFixed(2)}%`;
+        document.getElementById('top-prediction-host').textContent = topPrediction['Virus Host']; // Populate Virus Host
+        document.getElementById('top-prediction-database').textContent = topPrediction['Database']; // Populate Database
+        document.getElementById('top-prediction-date').textContent = topPrediction['Scan Date'];
+
+
+        // Populate predictions table
+        const predictionsTableBody = document.getElementById('predictions-table-body');
+        let tableHtml = '';
+        summaryStats['Top Predictions'].forEach(p => {
+            const rowVirusID = p['Virus ID'];
+            const linkUrl = `https://www.ncbi.nlm.nih.gov/search/all/?term=${rowVirusID}`;
+            
+            tableHtml += `
+            <tr class="border-t border-t-[#2d363d]"> 
+              <td class="h-[72px] px-4 py-2 w-[15%] text-white text-sm font-normal leading-normal">
+                <a href="${linkUrl}" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">${rowVirusID}</a>
+              </td>
+              <td class="h-[72px] px-4 py-2 w-[30%] text-[#9cabba] text-sm font-normal leading-normal">${p['Virus Name']}</td>
+              <td class="h-[72px] px-4 py-2 w-[20%] text-[#9cabba] text-sm font-normal leading-normal">${p['Virus Host']}</td>
+              <td class="h-[72px] px-4 py-2 w-[15%] text-[#9cabba] text-sm font-normal leading-normal">${p['Database']}</td>
+              <td class="h-[72px] px-4 py-2 w-[20%] text-[#9cabba] text-sm font-normal leading-normal">${(p.Probability * 100).toFixed(2)}%</td>
+              <td class="h-[72px] px-4 py-2 w-[20%] text-[#9cabba] text-sm font-normal leading-normal whitespace-nowrap">${p['Scan Date']}</td>
+            </tr>
+          `;
+        });
+        predictionsTableBody.innerHTML = tableHtml;
+        
+        // Populate Monthly New Cases - Adjusted for potentially single month data
+        const monthlyCases = summaryStats["Monthly New Cases"];
+        const months = Object.keys(monthlyCases).sort();
+        const caseCounts = months.map(month => monthlyCases[month]);
+
+        const totalCasesEl = document.getElementById('total-monthly-cases');
+        const trendPercentEl = document.getElementById('monthly-change-trend');
+        const trendPeriodEl = document.getElementById('monthly-change-period');
+
+        if (caseCounts.length > 0) {
+            const lastMonthCases = caseCounts[caseCounts.length - 1];
+            totalCasesEl.textContent = lastMonthCases.toLocaleString();
+
+            if (caseCounts.length >= 2) {
+                const prevMonthCases = caseCounts[caseCounts.length - 2];
+                const percentageChange = ((lastMonthCases - prevMonthCases) / prevMonthCases) * 100;
+
+                trendPercentEl.textContent = `${Math.round(percentageChange)}%`;
+                trendPeriodEl.textContent = 'vs. Last Month';
+
+                if (percentageChange < 0) {
+                    trendPercentEl.classList.remove('text-[#ff0000]'); 
+                    trendPercentEl.classList.add('text-red-500'); 
+                } else {
+                    trendPercentEl.classList.remove('text-red-500');
+                    trendPercentEl.classList.add('text-[#ff0000]'); // New red for positive trend
+                }
+            } else {
+                // Only one month of data, no previous month to compare
+                trendPercentEl.textContent = 'N/A';
+                trendPercentEl.classList.remove('text-[#ff0000]', 'text-red-500');
+                trendPercentEl.classList.add('text-[#9cabba]');
+                trendPeriodEl.textContent = '';
+            }
+        } else {
+            totalCasesEl.textContent = 'N/A';
+            trendPercentEl.textContent = 'N/A';
+            trendPeriodEl.textContent = '';
+        }
+
+        // Update Chart with Plotly
+        if (caseCounts.length > 0) {
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const plotLabels = months.map(m => {
+                const parts = m.split('-');
+                const monthIndex = parseInt(parts[1], 10) - 1;
+                return monthNames[monthIndex];
+            });
+
+            const data = [{
+                x: plotLabels,
+                y: caseCounts,
+                type: 'scatter',
+                mode: 'lines',
+                line: {
+                    color: '#ff0000', // Red line
+                    width: 3
+                },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(255, 0, 0, 0.15)', // Semi-transparent red fill
+                hovertemplate: '<b>%{y}</b> Cases<extra></extra>',
+            }];
+
+            const layout = {
+                paper_bgcolor: 'rgba(0,0,0,0)', // Transparent background
+                plot_bgcolor: 'rgba(0,0,0,0)', // Transparent plot area
+                margin: { l: 30, r: 10, b: 20, t: 10 },
+                height: 180, 
+                showlegend: false,
+                xaxis: {
+                    showgrid: false,
+                    zeroline: false,
+                    tickfont: { color: '#9cabba', size: 12 }, // Grey labels
+                    linecolor: '#2d363d', // Dark border line
+                    fixedrange: true, // Prevent zoom/pan
+                },
+                yaxis: {
+                    showgrid: true,
+                    gridcolor: '#2d363d', // Dark grey grid
+                    zeroline: false,
+                    showticklabels: true,
+                    tickfont: { color: '#9cabba', size: 12 }, // Grey labels
+                    fixedrange: true,
+                    rangemode: 'tozero' // Ensure the y-axis starts at zero
+                },
+            };
+
+            Plotly.newPlot('monthly-chart-plot', data, layout, {
+                displayModeBar: false, 
+                responsive: true
+            });
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#111518] dark group/design-root overflow-x-hidden"
+      style="--select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(156,171,186)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e</path>%3c/svg%3e'); font-family: Inter, &quot;Noto Sans&quot;, sans-serif;"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2d363d] px-10 py-3">
+          <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-white">
+              <span class="text-[#ff0000] text-xl font-extrabold leading-none">></span>
+              <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">virsentai</h2>
+            </div>
+            <div class="flex items-center gap-9">
+              <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Overview</a> 
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
+            </div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <div class="flex min-w-72 flex-col gap-3">
+                <p class="text-white tracking-light text-[32px] font-bold leading-tight">Viral Sentry AI – Intelligent Zoonotic Surveillance Platform</p>
+                <p class="text-[#9cabba] text-base font-normal leading-relaxed">Advanced AI protection against zoonotic threats. Publicly funded academic research, developed in the EU.</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-4 p-4">
+              
+              <div class="flex-1 min-w-[300px]">
+                  <div class="relative w-full h-full"> 
+                      <img src="img/virus.png" alt="Targeted Virus Icon" class="w-full h-full object-cover rounded-xl border border-[#2d363d]">
+                      <p class="absolute bottom-0 inset-x-0 text-center text-[#9cabba] text-sm font-medium flash p-1 bg-black/50">Scanning</p>
+                  </div>
+              </div>
+
+              <div class="flex-1 min-w-[400px] flex flex-col gap-4"> 
+                
+                <div class="flex flex-col gap-2 rounded-xl border border-[#2d363d] p-6 flex-1">
+                  <p class="text-white text-base font-medium leading-normal">Top Predicted Zoonotic Threat</p>
+                  <p class="text-white tracking-light text-2xl font-bold leading-tight truncate" id="top-prediction-name"></p>
+                  
+                  <div class="flex gap-2 items-center mt-2">
+                    <p class="text-[#9cabba] text-sm font-normal leading-normal">Virus ID:</p>
+                    <a id="top-prediction-link" target="_blank" class="text-cyan-400 text-sm font-medium leading-normal hover:text-[#ff0000]"></a>
+                  </div>
+                  
+                  <div class="flex gap-2 items-center">
+                    <p class="text-[#9cabba] text-sm font-normal leading-normal">Probability:</p>
+                    <p class="text-[#ff0000] text-sm font-medium leading-normal" id="top-prediction-probability"></p>
+                  </div>
+                  <div class="flex gap-2 items-center">
+                    <p class="text-[#9cabba] text-sm font-normal leading-normal">Virus Host:</p>
+                    <p class="text-white text-sm font-medium leading-normal" id="top-prediction-host"></p>
+                  </div>
+                  <div class="flex gap-2 items-center">
+                    <p class="text-[#9cabba] text-sm font-normal leading-normal">Database:</p>
+                    <p class="text-white text-sm font-medium leading-normal" id="top-prediction-database"></p>
+                  </div>
+                  <div class="flex gap-2 items-center">
+                    <p class="text-[#9cabba] text-sm font-normal leading-normal">Scan Date:</p>
+                    <p class="text-white text-sm font-medium leading-normal" id="top-prediction-date"></p>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4">
+                  <div class="flex-1 flex-col gap-1 rounded-xl border border-[#2d363d] p-4 bg-[#283139]">
+                    <p class="text-white text-sm font-medium leading-normal">Scanned Viruses</p>
+                    <p class="text-white tracking-light text-xl font-bold leading-tight" id="total-scanned"></p>
+                  </div>
+                  
+                  <div class="flex-1 flex-col gap-1 rounded-xl border border-[#ff0000] p-4 bg-[#3f191b]">
+                    <p class="text-white text-sm font-medium leading-normal">Zoonotic Viruses</p>
+                    <p class="text-white tracking-light text-xl font-bold leading-tight" id="zoonotic-viruses"></p>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-4 px-4 py-6">
+              
+              <div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl border border-[#2d363d] p-6">
+                <p class="text-white text-base font-medium leading-normal">Monthly New Predicted Cases</p>
+                <p class="text-white tracking-light text-[32px] font-bold leading-tight truncate" id="total-monthly-cases"></p>
+                <div class="flex gap-1">
+                  <p class="text-[#9cabba] text-base font-normal leading-normal" id="monthly-change-period"></p>
+                  <p class="text-base font-medium leading-normal" id="monthly-change-trend"></p>
+                </div>
+                <div class="flex min-h-[180px] flex-1 flex-col py-4">
+                  <div id="monthly-chart-plot" style="width: 100%; height: 180px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Top 10 Zoonotic Virus Predictions</h2>
+            <div class="px-4 py-3 @container">
+              <div class="flex overflow-hidden rounded-xl border border-[#2d363d] bg-[#111518]">
+                <table class="flex-1 w-full">
+                  <thead>
+                    <tr class="bg-[#1b2127]">
+                      <th class="px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Virus ID</th>
+                      <th class="px-4 py-3 text-left text-white w-[30%] text-sm font-medium leading-normal">Virus Name</th>
+                      <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-medium leading-normal">Virus Host</th>
+                      <th class="px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Database</th>
+                      <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-medium leading-normal">Probability</th>
+                      <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-normal leading-normal whitespace-nowrap">Scan Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="predictions-table-body">
+                    </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="px-4 pt-2 pb-5">
+                <p class="text-[#9cabba] text-xs italic text-center">Disclaimer: virsentai is an AI model trained on complete viral genomes; practical laboratory experiments are required to confirm its results.</p>
+            </div>
+            
+            <footer class="text-center text-[#9cabba] py-8 mt-6">
+                <p>© 2025 Copyright by <a href="https://rnasa-imedir.udc.es/en/" class="text-white hover:text-[#ff0000]">RNASA</a>, <a href="https://citic.udc.es/en/home-english-2/" class="text-white hover:text-[#ff0000]">CITIC</a>, <a href="https://www.udc.es/en/" class="text-white hover:text-[#ff0000]">UDC</a>, Spain</p>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Models - Viral Sentry AI</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#111518] dark group/design-root overflow-x-hidden"
+      style="font-family: Inter, &quot;Noto Sans&quot;, sans-serif;"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2d363d] px-10 py-3">
+          <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-white">
+              <span class="text-[#ff0000] text-xl font-extrabold leading-none">></span>
+              <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">virsentai</h2>
+            </div>
+            <div class="flex items-center gap-9">
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./index.html">Overview</a>
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
+              <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Models</a>
+            </div>
+          </div>
+          
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1 text-white">
+            <div class="p-4">
+              <h1 class="text-white tracking-light text-[32px] font-bold leading-tight mb-4">Our Model: VirSentAI</h1>
+              <p class="text-[#9cabba] text-base font-normal leading-relaxed mb-4">
+                The Viral Sentry AI model uses machine learning to predict zoonotic potential based on viral sequences and metadata. It is designed to assist researchers and public health officials in identifying emerging threats. The VirSentAI model (virsentai-v2-hyena-dna-16k) was obtained by fine-tuning the pretrained HyenaDNA model, sourced from <a href="https://huggingface.co/LongSafari/hyenadna-medium-160k-seqlen-hf" target="_blank" class="text-cyan-400 hover:underline">LongSafari/hyenadna-medium-160k-seqlen-hf</a>. This model is capable of handling DNA sequences up to 160,000 bases long, enabling robust analysis of viral genomes.
+              </p>
+
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Training & Hardware</h2>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
+                  <p class="text-base font-medium text-white">Training Dataset</p>
+                  <p class="text-[#9cabba] text-2xl font-bold">31,728</p>
+                   <p class="text-sm text-gray-400">viruses</p>
+                </div>
+                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
+                  <p class="text-base font-medium text-white">Training Time</p>
+                  <p class="text-[#9cabba] text-2xl font-bold">150</p>
+                  <p class="text-sm text-gray-400">hours</p>
+                </div>
+                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
+                  <p class="text-base font-medium text-white">Hardware</p>
+                  <p class="text-[#9cabba] text-2xl font-bold">NVIDIA</p>
+                  <p class="text-sm text-gray-400">24G GPU</p>
+                </div>
+              </div>
+
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Model Performance</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
+                    <p class="text-base font-medium text-white">Validation Accuracy</p>
+                    <p class="text-[#9cabba] text-2xl font-bold">0.8724</p>
+                </div>
+                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
+                    <p class="text-base font-medium text-white">Training Accuracy</p>
+                    <p class="text-[#9cabba] text-2xl font-bold">0.8789</p>
+                </div>
+                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
+                    <p class="text-base font-medium text-white">Validation AUROC</p>
+                    <p class="text-[#9cabba] text-2xl font-bold">0.9496</p>
+                </div>
+                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
+                    <p class="text-base font-medium text-white">Training AUROC</p>
+                    <p class="text-[#9cabba] text-2xl font-bold">0.9512</p>
+                </div>
+              </div>
+              
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Dataset</h2>
+              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
+                <li><b>Databases:</b> NCBI (<a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/" target="_blank" class="text-cyan-400 hover:underline">link</a>), VirusHostDB (<a href="https://www.genome.jp/ftp/db/virushostdb/" target="_blank" class="text-cyan-400 hover:underline">link</a>), Viprbrc (<a href="https://www.bv-brc.org/docs/quick_references/ftp.html#downloading-data-for-large-number-of-genomes" target="_blank" class="text-cyan-400 hover:underline">link</a>)</li>
+                <li><b>Data points:</b> 31,728 complete genomes of a balanced dataset of viruses with human and non-human hosts (maximum length of 160,000 bases).</li>
+              </ul>
+              
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Model Training Details</h2>
+              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
+                <li><b>Precision:</b> 16-bit float precision for efficient computation.</li>
+                <li><b>Epochs:</b> Trained for 15 epochs.</li>
+                <li><b>Batch Size:</b> A batch size of 2 was used.</li>
+                <li><b>Gradient Accumulation:</b> 8 steps. This is a key technique for training large models on limited hardware, as it accumulates gradients over several steps before performing an optimizer update.</li>
+                <li><b>Optimizer:</b> AdamW, an adaptive optimizer well-suited for transformer models.</li>
+              </ul>
+              
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Pre-trained HyenaDNA Model Advantages</h2>
+                <p class="text-[#9cabba] text-base font-normal leading-relaxed mb-4">
+                HyenaDNA’s main advantage is its ability to efficiently model extremely long sequences with single-nucleotide precision and global context, thanks to its innovative Hyena operator. This makes it uniquely suited for genomics and any application where understanding long-range dependencies in sequence data is critical. The model topology offers several advantages over traditional Transformer models:
+              </p>
+              <ul class="list-disc list-inside space-y-4 text-[#9cabba]">
+                <li><b>Massive Context Length:</b> Supports sequences up to 160,000 tokens, enabling the modeling of long-range dependencies crucial for genomics.</li>
+                <li><b>Subquadratic Scaling:</b> Uses a Hyena operator, an efficient alternative to attention, allowing faster processing of long sequences with lower memory requirements.</li>
+                <li><b>Single Nucleotide Resolution:</b> Pretrained at single nucleotide resolution, allowing for fine-grained analysis and precise downstream predictions.</li>
+                <li><b>Global Receptive Field:</b> The implicit long convolution allows every position in the sequence to influence every other position at every layer.</li>
+                <li><b>State-of-the-Art Performance:</b> Set new state-of-the-art results on 23 downstream genomic tasks.</li>
+              </ul>
+              
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">DNA Models: VirSentAI vs. Evo</h2>
+              <div class="overflow-x-auto rounded-xl border border-[#3b4854]">
+                <table class="w-full text-left text-sm text-[#9cabba]">
+                  <thead class="text-xs text-white uppercase bg-[#1b2127] border-b border-[#3b4854]">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">Feature</th>
+                      <th scope="col" class="px-6 py-3">VirSentAI Model</th>
+                      <th scope="col" class="px-6 py-3">Evo Model</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Model Size</th>
+                      <td class="px-6 py-4">120 M parameters (fewer than 30 MB)</td>
+                      <td class="px-6 py-4">7B parameters (Evo-1), 40B (Evo-2)</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Model Tokenization</th>
+                      <td class="px-6 py-4">Single-nucleotide, byte-level resolution</td>
+                      <td class="px-6 py-4">Single-nucleotide, byte-level resolution</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Training Time</th>
+                      <td class="px-6 py-4">Less than one week with a 24 GB GPU using 4 sequences (16 GB for fewer sequences)</td>
+                      <td class="px-6 py-4">Approximately 4 weeks on large datasets</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Inference Resources</th>
+                      <td class="px-6 py-4">Maximum 13.5 GB VRAM for 4 sequences; CPU and RAM are easily usable.</td>
+                      <td class="px-6 py-4">High-memory GPUs needed for million-base context</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Max Sequence Length</th>
+                      <td class="px-6 py-4">160,000 base pairs</td>
+                      <td class="px-6 py-4">Up to 1 million base pairs (Evo-2)</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Architecture Aspect</th>
+                      <td class="px-6 py-4">HyenaDNA</td>
+                      <td class="px-6 py-4">StripedHyena</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Core Architecture</th>
+                      <td class="px-6 py-4">Stack of Hyena operators replacing attention with implicit convolutions and gating</td>
+                      <td class="px-6 py-4">Hybrid of rotary grouped attention and gated convolutions arranged in Hyena blocks</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Efficiency</th>
+                      <td class="px-6 py-4">160x faster training at sequence length 1M compared to Transformers</td>
+                      <td class="px-6 py-4">Faster training and inference at long context (>3x speed at 131k tokens compared to Transformers)</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Scalability</th>
+                      <td class="px-6 py-4">Subquadratic operations enabling much longer context windows (up to 1M tokens)</td>
+                      <td class="px-6 py-4">Near-linear compute/memory scaling with sequence length</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Application Focus</th>
+                      <td class="px-6 py-4">Genomic foundation model specialized for DNA sequences</td>
+                      <td class="px-6 py-4">General sequence modeling including biological sequences</td>
+                    </tr>
+                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Attention Mechanism</th>
+                      <td class="px-6 py-4">No traditional attention; replaced by efficient Hyena operator</td>
+                      <td class="px-6 py-4">Partial rotary grouped attention combined with Hyena layers</td>
+                    </tr>
+                    <tr class="bg-[#1b2127]">
+                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Autoregressive Generation</th>
+                      <td class="px-6 py-4">Not specified, focused on long context understanding</td>
+                      <td class="px-6 py-4">Supports efficient generation with caching</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Limitations of VirSentAI</h2>
+              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
+                <li><b>Limited training time:</b> the AUROC plot shows that the model can still be improved.</li>
+                <li><b>Limited sequence length:</b> only the first 160,000 DNA bases of any viral sequence are used for prediction.</li>
+                <li><b>Limited database scans:</b> for the moment, VirSentAI is scanning only the NCBI database.</li>
+              </ul>
+
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">References</h2>
+              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
+                  <li><a href="https://huggingface.co/LongSafari/hyenadna-medium-160k-seqlen-hf" target="_blank" class="text-cyan-400 hover:underline">HyenaDNA on HuggingFace</a></li>
+                  <li><a href="https://arxiv.org/abs/2306.15794" target="_blank" class="text-cyan-400 hover:underline">HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution (Nguyen et al., 2023)</a></li>
+                  <li><a href="https://arcinstitute.org/tools/evo" target="_blank" class="text-cyan-400 hover:underline">Evo 2: DNA Foundation Model</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer class="text-center text-[#9cabba] py-8 mt-auto">
+            <p>© 2025 Copyright by <a href="https://rnasa-imedir.udc.es/en/" class="text-white hover:text-[#ff0000]">RNASA</a>, <a href="https://citic.udc.es/en/home-english-2/" class="text-white hover:text-[#ff0000]">CITIC</a>, <a href="https://www.udc.es/en/" class="text-white hover:text-[#ff0000]">UDC</a>, Spain</p>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
