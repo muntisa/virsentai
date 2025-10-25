@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445223.svg)](https://doi.org/10.5281/zenodo.17445223)
+
 # Viral Sentry AI (virsentai) – Intelligent Zoonotic Surveillance Platform
 Advanced AI protection against zoonotic threats. Publicly funded academic research, developed in the EU.
 
