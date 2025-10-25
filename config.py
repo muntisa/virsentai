@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS models (
 LOG_DIR = "logs"
 
 # Webapp
-WEBAPP_DIR = "webapp"
-JSON_FILE  = "webapp/summary_stats_from_db.json"
+WEBAPP_DIR = "docs"
+JSON_FILE  = "docs/summary_stats_from_db.json"
 AUROC_CUTOFF = 0.80 # used to decide possible zoonotic viruses
 
 # NCBI Entrez
