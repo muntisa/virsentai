@@ -1,4 +1,11 @@
+
+
+# VirSentAI
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445223.svg)](https://doi.org/10.5281/zenodo.17445223)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+A web platform for predicting virus–host interactions using genomic features.
+
 
 # Viral Sentry AI (virsentai) – Intelligent Zoonotic Surveillance Platform
 Advanced AI protection against zoonotic threats. Publicly funded academic research, developed in the EU.
