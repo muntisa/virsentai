@@ -16,14 +16,13 @@ Viral Sentry AI is a cutting-edge platform designed to predict zoonotic potentia
 Cristian R. Munteanu
 - AI and Bioinformatics expert, lead programmer, and methodology designer
 - Affiliation: CITIC, University of A Coruña, Spain
-- ORCID: [0000-0001-2345-6789](https://orcid.org/0000-0001-2345-6789)
+- ORCID: [0000-0002-5628-2268](https://orcid.org/0000-0002-5628-2268)
 
 José M. Vázquez-Naya
 - AI, ontologies, and cybersecurity expert
 - Affiliation: CITIC, University of A Coruña, Spain
-- ORCID: [0000-0003-4567-8901](https://orcid.org/0000-0003-4567-8901)
+- ORCID: [0000-0002-6194-5329](https://orcid.org/0000-0002-6194-5329)
 
 Eduardo Tejera
 - Bioinformatics expert with experience in virus prediction models.
 - Affiliation: Universidad de Las Américas, Quito, Ecuador
-- ORCID: [0000-0002-3456-7890](https://orcid.org/0000-0002-3456-7890)
