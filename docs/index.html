@@ -10,6 +10,7 @@
 
     <title>Viral Sentry AI</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -22,6 +23,42 @@
       }
       .flash {
         animation: blink 3s linear infinite;
+      }
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .px-40 {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        .flex-wrap {
+          flex-direction: column;
+        }
+        .min-w-72 {
+          min-width: 100%;
+        }
+        .min-w-[300px], .min-w-[400px] {
+          min-width: 100%;
+        }
+        .text-\[32px\] {
+          font-size: 24px;
+        }
+        .text-\[22px\] {
+          font-size: 18px;
+        }
+        header .flex.items-center.gap-8 {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .table-responsive-container {
+            overflow-x: auto;
+        }
+      }
+      @media (max-width: 480px) {
+        .px-10 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
       }
     </style>
     <script>      // Data from summary_stats.json embedded directly
@@ -264,7 +301,7 @@
   <body>
     <div
       class="relative flex size-full min-h-screen flex-col bg-[#111518] dark group/design-root overflow-x-hidden"
-      style="--select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(156,171,186)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e</path>%3c/svg%3e'); font-family: Inter, &quot;Noto Sans&quot;, sans-serif;"
+      style="--select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(156,171,186)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48-48A8,8,0,0,0,85.66,85.66Z%27%3e</path>%3c/svg%3e'); font-family: Inter, &quot;Noto Sans&quot;, sans-serif;"
     >
       <div class="layout-container flex h-full grow flex-col">
         <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2d363d] px-10 py-3">
@@ -360,22 +397,22 @@
 
             <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Top 10 Zoonotic Virus Predictions</h2>
             <div class="px-4 py-3 @container">
-              <div class="flex overflow-hidden rounded-xl border border-[#2d363d] bg-[#111518]">
-                <table class="flex-1 w-full">
-                  <thead>
-                    <tr class="bg-[#1b2127]">
-                      <th class="px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Virus ID</th>
-                      <th class="px-4 py-3 text-left text-white w-[30%] text-sm font-medium leading-normal">Virus Name</th>
-                      <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-medium leading-normal">Virus Host</th>
-                      <th class="px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Database</th>
-                      <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-medium leading-normal">Probability</th>
-                      <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-normal leading-normal whitespace-nowrap">Scan Date</th>
-                    </tr>
-                  </thead>
-                  <tbody id="predictions-table-body">
-                    </tbody>
-                </table>
-              </div>
+                <div class="table-responsive-container flex overflow-hidden rounded-xl border border-[#2d363d] bg-[#111518]">
+                    <table class="flex-1 w-full">
+                      <thead>
+                        <tr class="bg-[#1b2127]">
+                          <th class="px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Virus ID</th>
+                          <th class="px-4 py-3 text-left text-white w-[30%] text-sm font-medium leading-normal">Virus Name</th>
+                          <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-medium leading-normal">Virus Host</th>
+                          <th class="px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Database</th>
+                          <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-medium leading-normal">Probability</th>
+                          <th class="px-4 py-3 text-left text-white w-[20%] text-sm font-normal leading-normal whitespace-nowrap">Scan Date</th>
+                        </tr>
+                      </thead>
+                      <tbody id="predictions-table-body">
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="px-4 pt-2 pb-5">
