@@ -51,7 +51,9 @@
             gap: 1rem;
         }
         .table-responsive-container {
+            display: block;
             overflow-x: auto;
+            white-space: nowrap;
         }
       }
       @media (max-width: 480px) {
@@ -322,8 +324,8 @@
             
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <div class="flex min-w-72 flex-col gap-3">
-                <p class="text-white tracking-light text-[32px] font-bold leading-tight">Viral Sentry AI – Intelligent Zoonotic Surveillance Platform</p>
-                <p class="text-[#9cabba] text-base font-normal leading-relaxed">Advanced AI protection against zoonotic threats. Publicly funded academic research, developed in the EU.</p>
+                <p class="text-white tracking-light text-[32px] font-bold leading-tight">Viral Sentry AI – Autonomous Zoonotic Virus Surveillance</p>
+                <p class="text-[#9cabba] text-base font-normal leading-relaxed">We use advanced AI models to autonomously scan new viral complete genomes and predict their risk of human infection. Publicly funded academic research, developed in the European Union.</p>
               </div>
             </div>
 
@@ -397,8 +399,8 @@
 
             <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Top 10 Zoonotic Virus Predictions</h2>
             <div class="px-4 py-3 @container">
-                <div class="table-responsive-container flex overflow-hidden rounded-xl border border-[#2d363d] bg-[#111518]">
-                    <table class="flex-1 w-full">
+                <div class="table-responsive-container rounded-xl border border-[#2d363d] bg-[#111518]">
+                    <table class="w-full">
                       <thead>
                         <tr class="bg-[#1b2127]">
                           <th class="px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Virus ID</th>

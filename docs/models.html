@@ -14,31 +14,42 @@
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <style>
-      /* Responsive adjustments for mobile devices */
+      /* Responsive adjustments */
       @media (max-width: 768px) {
-        /* Reduce horizontal padding for main content and header to prevent overflow */
         .px-40 {
           padding-left: 1rem;
           padding-right: 1rem;
         }
-        .px-10 {
-          padding-left: 1rem;
-          padding-right: 1rem;
-        }
-
-        /* Adjust font sizes for better readability */
         .text-\[32px\] {
-          font-size: 1.5rem; /* 24px */
+          font-size: 24px;
         }
         .text-\[22px\] {
-          font-size: 1.25rem; /* 20px */
+          font-size: 18px;
         }
-
-        /* Stack header items vertically for smaller screens */
         header .flex.items-center.gap-8 {
             flex-direction: column;
             align-items: flex-start;
             gap: 1rem;
+        }
+        .flex-wrap {
+            flex-direction: column;
+        }
+        .min-w-\[300px\] {
+            min-width: 100%;
+        }
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        .comparison-table {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+      }
+      @media (max-width: 480px) {
+        .px-10 {
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
       }
     </style>
@@ -61,170 +72,118 @@
               <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Models</a>
             </div>
           </div>
-          
+     
         </header>
         <div class="px-40 flex flex-1 justify-center py-5">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1 text-white">
             <div class="p-4">
               <h1 class="text-white tracking-light text-[32px] font-bold leading-tight mb-4">Our Model: VirSentAI</h1>
-              <p class="text-[#9cabba] text-base font-normal leading-relaxed mb-4">
-                The Viral Sentry AI model uses machine learning to predict zoonotic potential based on viral sequences and metadata. It is designed to assist researchers and public health officials in identifying emerging threats. The VirSentAI model (virsentai-v2-hyena-dna-16k) was obtained by fine-tuning the pretrained HyenaDNA model, sourced from <a href="https://huggingface.co/LongSafari/hyenadna-medium-160k-seqlen-hf" target="_blank" class="text-cyan-400 hover:underline">LongSafari/hyenadna-medium-160k-seqlen-hf</a>. This model is capable of handling DNA sequences up to 160,000 bases long, enabling robust analysis of viral genomes.
+              <p class="text-[#9cabba] text-base font-normal leading-relaxed mb-8">
+                The Viral Sentry AI model uses machine learning to predict zoonotic potential based on viral sequences and metadata. It is designed to assist researchers and public health officials in identifying emerging threats. The VirSentAI model (virsentai-v2-hyena-dna-16k) was obtained by fine-tuning the pretrained HyenaDNA model, sourced from LongSafari/hyenadna-medium-160k-seqlen-hf. This model is capable of handling DNA sequences up to 160,000 bases long, enabling robust analysis of viral genomes.
               </p>
 
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Training & Hardware</h2>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
-                  <p class="text-base font-medium text-white">Training Dataset</p>
-                  <p class="text-[#9cabba] text-2xl font-bold">31,728</p>
-                   <p class="text-sm text-gray-400">viruses</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 stats-grid">
+                <div>
+                  <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Training & Hardware</h2>
+                  <div class="space-y-4 text-[#9cabba]">
+                    <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">Training Dataset</span><span class="font-bold text-white">31,728 viruses</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">Training Time</span><span class="font-bold text-white">150 hours</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">Hardware</span><span class="font-bold text-white">NVIDIA 24G GPU</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
-                  <p class="text-base font-medium text-white">Training Time</p>
-                  <p class="text-[#9cabba] text-2xl font-bold">150</p>
-                  <p class="text-sm text-gray-400">hours</p>
-                </div>
-                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
-                  <p class="text-base font-medium text-white">Hardware</p>
-                  <p class="text-[#9cabba] text-2xl font-bold">NVIDIA</p>
-                  <p class="text-sm text-gray-400">24G GPU</p>
+                <div>
+                  <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Model Performance</h2>
+                   <div class="space-y-4 text-[#9cabba]">
+                    <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">Validation Accuracy</span><span class="font-bold text-white">0.8724</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">Training Accuracy</span><span class="font-bold text-white">0.8789</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">Validation AUROC</span><span class="font-bold text-white">0.9496</span>
+                    </div>
+                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">Training AUROC</span><span class="font-bold text-white">0.9512</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Model Performance</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
-                    <p class="text-base font-medium text-white">Validation Accuracy</p>
-                    <p class="text-[#9cabba] text-2xl font-bold">0.8724</p>
-                </div>
-                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
-                    <p class="text-base font-medium text-white">Training Accuracy</p>
-                    <p class="text-[#9cabba] text-2xl font-bold">0.8789</p>
-                </div>
-                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
-                    <p class="text-base font-medium text-white">Validation AUROC</p>
-                    <p class="text-[#9cabba] text-2xl font-bold">0.9496</p>
-                </div>
-                <div class="rounded-xl border border-[#3b4854] p-4 bg-[#1b2127]">
-                    <p class="text-base font-medium text-white">Training AUROC</p>
-                    <p class="text-[#9cabba] text-2xl font-bold">0.9512</p>
-                </div>
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Dataset</h2>
+              <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
+                <p><strong>Databases</strong>: <a href="https://www.ncbi.nlm.nih.gov/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">NCBI</a>, <a href="https://www.genome.jp/virushostdb/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">VirusHostDB</a>, <a href="https://www.viprbrc.org/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">Viprbrc</a></p>
+                <p><strong>Data points</strong>: 31,728 complete genomes of a balanced dataset of viruses with human and non-human hosts (maximum length of 160,000 bases).</p>
               </div>
-              
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Dataset</h2>
-              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
-                <li><b>Databases:</b> NCBI (<a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/" target="_blank" class="text-cyan-400 hover:underline">link</a>), VirusHostDB (<a href="https://www.genome.jp/ftp/db/virushostdb/" target="_blank" class="text-cyan-400 hover:underline">link</a>), Viprbrc (<a href="https://www.bv-brc.org/docs/quick_references/ftp.html#downloading-data-for-large-number-of-genomes" target="_blank" class="text-cyan-400 hover:underline">link</a>)</li>
-                <li><b>Data points:</b> 31,728 complete genomes of a balanced dataset of viruses with human and non-human hosts (maximum length of 160,000 bases).</li>
-              </ul>
-              
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Model Training Details</h2>
-              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
-                <li><b>Precision:</b> 16-bit float precision for efficient computation.</li>
-                <li><b>Epochs:</b> Trained for 15 epochs.</li>
-                <li><b>Batch Size:</b> A batch size of 2 was used.</li>
-                <li><b>Gradient Accumulation:</b> 8 steps. This is a key technique for training large models on limited hardware, as it accumulates gradients over several steps before performing an optimizer update.</li>
-                <li><b>Optimizer:</b> AdamW, an adaptive optimizer well-suited for transformer models.</li>
-              </ul>
-              
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Pre-trained HyenaDNA Model Advantages</h2>
-                <p class="text-[#9cabba] text-base font-normal leading-relaxed mb-4">
+
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Model Training Details</h2>
+              <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
+                  <p><strong>Precision</strong>: 16-bit float precision for efficient computation.</p>
+                  <p><strong>Epochs</strong>: Trained for 15 epochs.</p>
+                  <p><strong>Batch Size</strong>: A batch size of 2 was used.</p>
+                  <p><strong>Gradient Accumulation</strong>: 8 steps. This is a key technique for training large models on limited hardware, as it accumulates gradients over several steps before performing an optimizer update.</p>
+                  <p><strong>Optimizer</strong>: AdamW, an adaptive optimizer well-suited for transformer models.</p>
+              </div>
+
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Pre-trained HyenaDNA Model Advantages</h2>
+              <p class="text-[#9cabba] text-base font-normal leading-relaxed mb-4">
                 HyenaDNA’s main advantage is its ability to efficiently model extremely long sequences with single-nucleotide precision and global context, thanks to its innovative Hyena operator. This makes it uniquely suited for genomics and any application where understanding long-range dependencies in sequence data is critical. The model topology offers several advantages over traditional Transformer models:
               </p>
-              <ul class="list-disc list-inside space-y-4 text-[#9cabba]">
-                <li><b>Massive Context Length:</b> Supports sequences up to 160,000 tokens, enabling the modeling of long-range dependencies crucial for genomics.</li>
-                <li><b>Subquadratic Scaling:</b> Uses a Hyena operator, an efficient alternative to attention, allowing faster processing of long sequences with lower memory requirements.</li>
-                <li><b>Single Nucleotide Resolution:</b> Pretrained at single nucleotide resolution, allowing for fine-grained analysis and precise downstream predictions.</li>
-                <li><b>Global Receptive Field:</b> The implicit long convolution allows every position in the sequence to influence every other position at every layer.</li>
-                <li><b>State-of-the-Art Performance:</b> Set new state-of-the-art results on 23 downstream genomic tasks.</li>
+              <ul class="list-disc list-inside space-y-2 text-[#9cabba] mb-8">
+                <li><strong>Massive Context Length</strong>: Supports sequences up to 1 million tokens, enabling the modeling of long-range dependencies crucial for genomics.</li>
+                <li><strong>Subquadratic Scaling</strong>: Uses a Hyena operator, an efficient alternative to attention, allowing faster processing of long sequences with lower memory requirements.</li>
+                <li><strong>Single Nucleotide Resolution</strong>: Pretrained at single nucleotide resolution, allowing for fine-grained analysis and precise downstream predictions.</li>
+                <li><strong>Global Receptive Field</strong>: The implicit long convolution allows every position in the sequence to influence every other position at every layer.</li>
+                <li><strong>State-of-the-Art Performance</strong>: Set new state-of-the-art results on 23 downstream genomic tasks.</li>
               </ul>
               
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">DNA Models: VirSentAI vs. Evo</h2>
-              <div class="overflow-x-auto rounded-xl border border-[#3b4854]">
-                <table class="w-full text-left text-sm text-[#9cabba]">
-                  <thead class="text-xs text-white uppercase bg-[#1b2127] border-b border-[#3b4854]">
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">DNA Models: VirSentAI vs. Evo</h2>
+              <div class="overflow-x-auto comparison-table">
+                <table class="min-w-full border-collapse border border-[#3b4854] bg-[#1b2127]">
+                  <thead>
                     <tr>
-                      <th scope="col" class="px-6 py-3">Feature</th>
-                      <th scope="col" class="px-6 py-3">VirSentAI Model</th>
-                      <th scope="col" class="px-6 py-3">Evo Model</th>
+                      <th class="border border-[#3b4854] p-3 text-left text-sm font-bold text-white">Feature</th>
+                      <th class="border border-[#3b4854] p-3 text-left text-sm font-bold text-white">VirSentAI Model</th>
+                      <th class="border border-[#3b4854] p-3 text-left text-sm font-bold text-white">Evo Model</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Model Size</th>
-                      <td class="px-6 py-4">120 M parameters (fewer than 30 MB)</td>
-                      <td class="px-6 py-4">7B parameters (Evo-1), 40B (Evo-2)</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Model Tokenization</th>
-                      <td class="px-6 py-4">Single-nucleotide, byte-level resolution</td>
-                      <td class="px-6 py-4">Single-nucleotide, byte-level resolution</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Training Time</th>
-                      <td class="px-6 py-4">Less than one week with a 24 GB GPU using 4 sequences (16 GB for fewer sequences)</td>
-                      <td class="px-6 py-4">Approximately 4 weeks on large datasets</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Inference Resources</th>
-                      <td class="px-6 py-4">Maximum 13.5 GB VRAM for 4 sequences; CPU and RAM are easily usable.</td>
-                      <td class="px-6 py-4">High-memory GPUs needed for million-base context</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Max Sequence Length</th>
-                      <td class="px-6 py-4">160,000 base pairs</td>
-                      <td class="px-6 py-4">Up to 1 million base pairs (Evo-2)</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Architecture Aspect</th>
-                      <td class="px-6 py-4">HyenaDNA</td>
-                      <td class="px-6 py-4">StripedHyena</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Core Architecture</th>
-                      <td class="px-6 py-4">Stack of Hyena operators replacing attention with implicit convolutions and gating</td>
-                      <td class="px-6 py-4">Hybrid of rotary grouped attention and gated convolutions arranged in Hyena blocks</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Efficiency</th>
-                      <td class="px-6 py-4">160x faster training at sequence length 1M compared to Transformers</td>
-                      <td class="px-6 py-4">Faster training and inference at long context (>3x speed at 131k tokens compared to Transformers)</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Scalability</th>
-                      <td class="px-6 py-4">Subquadratic operations enabling much longer context windows (up to 1M tokens)</td>
-                      <td class="px-6 py-4">Near-linear compute/memory scaling with sequence length</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Application Focus</th>
-                      <td class="px-6 py-4">Genomic foundation model specialized for DNA sequences</td>
-                      <td class="px-6 py-4">General sequence modeling including biological sequences</td>
-                    </tr>
-                    <tr class="bg-[#1b2127] border-b border-[#3b4854]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Attention Mechanism</th>
-                      <td class="px-6 py-4">No traditional attention; replaced by efficient Hyena operator</td>
-                      <td class="px-6 py-4">Partial rotary grouped attention combined with Hyena layers</td>
-                    </tr>
-                    <tr class="bg-[#1b2127]">
-                      <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Autoregressive Generation</th>
-                      <td class="px-6 py-4">Not specified, focused on long context understanding</td>
-                      <td class="px-6 py-4">Supports efficient generation with caching</td>
-                    </tr>
+                  <tbody class="text-[#9cabba]">
+                    <tr><td class="border border-[#3b4854] p-3">Model Size</td><td class="border border-[#3b4854] p-3">120 M parameters (fewer than 30 MB)</td><td class="border border-[#3b4854] p-3">7B parameters (Evo-1), 40B (Evo-2)</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Model Tokenization</td><td class="border border-[#3b4854] p-3">Single-nucleotide, byte-level resolution</td><td class="border border-[#3b4854] p-3">Single-nucleotide, byte-level resolution</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Training Time</td><td class="border border-[#3b4854] p-3">Less than one week with a 24 GB GPU using 4 sequences (16 GB for fewer sequences)</td><td class="border border-[#3b4854] p-3">Approximately 4 weeks on large datasets</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Inference Resources</td><td class="border border-[#3b4854] p-3">Maximum 13.5 GB VRAM for 4 sequences; CPU and RAM are easily usable.</td><td class="border border-[#3b4854] p-3">High-memory GPUs needed for million-base context</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Max Sequence Length</td><td class="border border-[#3b4854] p-3">160,000 base pairs</td><td class="border border-[#3b4854] p-3">Up to 1 million base pairs (Evo-2)</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Architecture Aspect</td><td class="border border-[#3b4854] p-3">HyenaDNA</td><td class="border border-[#3b4854] p-3">StripedHyena</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Core Architecture</td><td class="border border-[#3b4854] p-3">Stack of Hyena operators replacing attention with implicit convolutions and gating</td><td class="border border-[#3b4854] p-3">Hybrid of rotary grouped attention and gated convolutions arranged in Hyena blocks</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Efficiency</td><td class="border border-[#3b4854] p-3">160x faster training at sequence length 1M compared to Transformers</td><td class="border border-[#3b4854] p-3">Faster training and inference at long context (>3x speed at 131k tokens compared to Transformers)</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Scalability</td><td class="border border-[#3b4854] p-3">Subquadratic operations enabling much longer context windows (up to 1M tokens)</td><td class="border border-[#3b4854] p-3">Near-linear compute/memory scaling with sequence length</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Application Focus</td><td class="border border-[#3b4854] p-3">Genomic foundation model specialized for DNA sequences</td><td class="border border-[#3b4854] p-3">General sequence modeling including biological sequences</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Attention Mechanism</td><td class="border border-[#3b4854] p-3">No traditional attention; replaced by efficient Hyena operator</td><td class="border border-[#3b4854] p-3">Partial rotary grouped attention combined with Hyena layers</td></tr>
+                    <tr><td class="border border-[#3b4854] p-3">Autoregressive Generation</td><td class="border border-[#3b4854] p-3">Not specified, focused on long context understanding</td><td class="border border-[#3b4854] p-3">Supports efficient generation with caching</td></tr>
                   </tbody>
                 </table>
               </div>
-              
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">Limitations of VirSentAI</h2>
-              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
-                <li><b>Limited training time:</b> the AUROC plot shows that the model can still be improved.</li>
-                <li><b>Limited sequence length:</b> only the first 160,000 DNA bases of any viral sequence are used for prediction.</li>
-                <li><b>Limited database scans:</b> for the moment, VirSentAI is scanning only the NCBI database.</li>
+
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] my-6">Limitations of VirSentAI</h2>
+              <ul class="list-disc list-inside space-y-2 text-[#9cabba] mb-8">
+                <li><strong>Limited training time</strong>: the AUROC plot shows that the model can still be improved.</li>
+                <li><strong>Limited sequence length</strong>: only the first 160,000 DNA bases of any viral sequence are used for prediction.</li>
+                <li><strong>Limited database scans</strong>: for the moment, VirSentAI is scanning only the NCBI database.</li>
               </ul>
 
-              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mt-8 mb-6">References</h2>
-              <ul class="list-disc list-inside space-y-2 text-[#9cabba]">
-                  <li><a href="https://huggingface.co/LongSafari/hyenadna-medium-160k-seqlen-hf" target="_blank" class="text-cyan-400 hover:underline">HyenaDNA on HuggingFace</a></li>
-                  <li><a href="https://arxiv.org/abs/2306.15794" target="_blank" class="text-cyan-400 hover:underline">HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution (Nguyen et al., 2023)</a></li>
-                  <li><a href="https://arcinstitute.org/tools/evo" target="_blank" class="text-cyan-400 hover:underline">Evo 2: DNA Foundation Model</a></li>
-              </ul>
+              <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">References</h2>
+              <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
+                  <p><a href="https://huggingface.co/collections/LongSafari/hyenadna-models-6552b7b51342a583642b2bb9" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">HyenaDNA on HuggingFace</a></p>
+                  <p><a href="https://arxiv.org/abs/2306.15794" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution (Nguyen et al., 2023)</a></p>
+                  <p><a href="https://github.com/arcinstitute/evo2" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">Evo 2: DNA Foundation Model</a></p>
+              </div>
+
             </div>
           </div>
         </div>
