@@ -15,6 +15,12 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <style>
       /* Responsive adjustments */
+      @media (max-width: 1024px) {
+        .px-40 {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+      }
       @media (max-width: 768px) {
         .px-40 {
           padding-left: 1rem;
@@ -27,29 +33,46 @@
           font-size: 18px;
         }
         header .flex.items-center.gap-8 {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
         }
         .flex-wrap {
-            flex-direction: column;
+          flex-direction: column;
         }
         .min-w-\[300px\] {
-            min-width: 100%;
+          min-width: 100%;
         }
         .stats-grid {
-            grid-template-columns: 1fr;
+          grid-template-columns: 1fr;
         }
         .comparison-table {
           display: block;
           overflow-x: auto;
           white-space: nowrap;
         }
+        .layout-content-container {
+          max-width: 100%;
+          width: 100%;
+          margin: 0;
+        }
+        .px-40.flex {
+          justify-content: flex-start;
+        }
       }
       @media (max-width: 480px) {
         .px-10 {
-            padding-left: 1rem;
-            padding-right: 1rem;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+        .layout-content-container {
+          padding: 0;
+        }
+        .stats-grid div {
+          width: 100%;
+        }
+        .px-40.flex {
+          padding: 0;
         }
       }
     </style>
@@ -72,9 +95,8 @@
               <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Models</a>
             </div>
           </div>
-     
         </header>
-        <div class="px-40 flex flex-1 justify-center py-5">
+        <div class="px-40 flex flex-1 py-5">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1 text-white">
             <div class="p-4">
               <h1 class="text-white tracking-light text-[32px] font-bold leading-tight mb-4">Our Model: VirSentAI</h1>
@@ -99,7 +121,7 @@
                 </div>
                 <div>
                   <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Model Performance</h2>
-                   <div class="space-y-4 text-[#9cabba]">
+                  <div class="space-y-4 text-[#9cabba]">
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
                       <span class="font-medium">Validation Accuracy</span><span class="font-bold text-white">0.8724</span>
                     </div>
@@ -109,7 +131,7 @@
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
                       <span class="font-medium">Validation AUROC</span><span class="font-bold text-white">0.9496</span>
                     </div>
-                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                    <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
                       <span class="font-medium">Training AUROC</span><span class="font-bold text-white">0.9512</span>
                     </div>
                   </div>
@@ -124,11 +146,11 @@
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Model Training Details</h2>
               <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
-                  <p><strong>Precision</strong>: 16-bit float precision for efficient computation.</p>
-                  <p><strong>Epochs</strong>: Trained for 15 epochs.</p>
-                  <p><strong>Batch Size</strong>: A batch size of 2 was used.</p>
-                  <p><strong>Gradient Accumulation</strong>: 8 steps. This is a key technique for training large models on limited hardware, as it accumulates gradients over several steps before performing an optimizer update.</p>
-                  <p><strong>Optimizer</strong>: AdamW, an adaptive optimizer well-suited for transformer models.</p>
+                <p><strong>Precision</strong>: 16-bit float precision for efficient computation.</p>
+                <p><strong>Epochs</strong>: Trained for 15 epochs.</p>
+                <p><strong>Batch Size</strong>: A batch size of 2 was used.</p>
+                <p><strong>Gradient Accumulation</strong>: 8 steps. This is a key technique for training large models on limited hardware, as it accumulates gradients over several steps before performing an optimizer update.</p>
+                <p><strong>Optimizer</strong>: AdamW, an adaptive optimizer well-suited for transformer models.</p>
               </div>
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Pre-trained HyenaDNA Model Advantages</h2>
@@ -142,7 +164,7 @@
                 <li><strong>Global Receptive Field</strong>: The implicit long convolution allows every position in the sequence to influence every other position at every layer.</li>
                 <li><strong>State-of-the-Art Performance</strong>: Set new state-of-the-art results on 23 downstream genomic tasks.</li>
               </ul>
-              
+
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">DNA Models: VirSentAI vs. Evo</h2>
               <div class="overflow-x-auto comparison-table">
                 <table class="min-w-full border-collapse border border-[#3b4854] bg-[#1b2127]">
@@ -179,16 +201,15 @@
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">References</h2>
               <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
-                  <p><a href="https://huggingface.co/collections/LongSafari/hyenadna-models-6552b7b51342a583642b2bb9" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">HyenaDNA on HuggingFace</a></p>
-                  <p><a href="https://arxiv.org/abs/2306.15794" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution (Nguyen et al., 2023)</a></p>
-                  <p><a href="https://github.com/arcinstitute/evo2" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">Evo 2: DNA Foundation Model</a></p>
+                <p><a href="https://huggingface.co/collections/LongSafari/hyenadna-models-6552b7b51342a583642b2bb9" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">HyenaDNA on HuggingFace</a></p>
+                <p><a href="https://arxiv.org/abs/2306.15794" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution (Nguyen et al., 2023)</a></p>
+                <p><a href="https://github.com/arcinstitute/evo2" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">Evo 2: DNA Foundation Model</a></p>
               </div>
-
             </div>
           </div>
         </div>
         <footer class="text-center text-[#9cabba] py-8 mt-auto">
-            <p>© 2025 Copyright by <a href="https://rnasa-imedir.udc.es/en/" class="text-white hover:text-[#ff0000]">RNASA</a>, <a href="https://citic.udc.es/en/home-english-2/" class="text-white hover:text-[#ff0000]">CITIC</a>, <a href="https://www.udc.es/en/" class="text-white hover:text-[#ff0000]">UDC</a>, Spain</p>
+          <p>© 2025 Copyright by <a href="https://rnasa-imedir.udc.es/en/" class="text-white hover:text-[#ff0000]">RNASA</a>, <a href="https://citic.udc.es/en/home-english-2/" class="text-white hover:text-[#ff0000]">CITIC</a>, <a href="https://www.udc.es/en/" class="text-white hover:text-[#ff0000]">UDC</a>, Spain</p>
         </footer>
       </div>
     </div>
