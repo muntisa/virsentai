@@ -1,6 +1,5 @@
-
-
 # VirSentAI
+[![](https://img.shields.io/badge/View%20Project-Website-blue)](https://muntisa.github.io/virsentai)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445223.svg)](https://doi.org/10.5281/zenodo.17445223)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
