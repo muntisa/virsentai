@@ -14,28 +14,31 @@
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <style>
-      /* Responsive adjustments */
+      /* Responsive adjustments for mobile devices */
       @media (max-width: 768px) {
+        /* Reduce horizontal padding for main content and header to prevent overflow */
         .px-40 {
           padding-left: 1rem;
           padding-right: 1rem;
         }
+        .px-10 {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+
+        /* Adjust font sizes for better readability */
         .text-\[32px\] {
-          font-size: 24px;
+          font-size: 1.5rem; /* 24px */
         }
         .text-\[22px\] {
-          font-size: 18px;
+          font-size: 1.25rem; /* 20px */
         }
+
+        /* Stack header items vertically for smaller screens */
         header .flex.items-center.gap-8 {
             flex-direction: column;
             align-items: flex-start;
             gap: 1rem;
-        }
-      }
-      @media (max-width: 480px) {
-        .px-10 {
-            padding-left: 1rem;
-            padding-right: 1rem;
         }
       }
     </style>
