@@ -17,7 +17,7 @@ Cristian R. Munteanu
 - Affiliation: CITIC, University of A Coruña, Spain
 - ORCID: [0000-0002-5628-2268](https://orcid.org/0000-0002-5628-2268)
 
-José M. Vázquez-Naya
+Jose Vázquez-Naya
 - AI, ontologies, and cybersecurity expert
 - Affiliation: CITIC, University of A Coruña, Spain
 - ORCID: [0000-0002-6194-5329](https://orcid.org/0000-0002-6194-5329)
