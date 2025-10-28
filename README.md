@@ -25,3 +25,4 @@ Jose Vázquez-Naya
 Eduardo Tejera
 - Bioinformatics expert with experience in virus prediction models.
 - Affiliation: Universidad de Las Américas, Quito, Ecuador
+- ORCID: [0000-0002-1377-0413](https://orcid.org/0000-0002-1377-0413)
