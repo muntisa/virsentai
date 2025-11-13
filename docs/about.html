@@ -91,6 +91,7 @@
             </div>
             <div class="flex items-center gap-9">
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./index.html">Overview</a>
+			  <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./repurposing.html">Drug Repurposing</a>
               <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">About</a>
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
             </div>
@@ -107,7 +108,7 @@
 					<img alt="Release DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.17445222.svg"></a>
 				Preprint<a href="https://doi.org/10.5281/zenodo.17450943">
 					<img alt="Preprint DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.17450943.svg"></a></br>
-                Viral Sentry AI is a cutting-edge platform designed to predict zoonotic potential in viruses, helping to identify emerging threats to public health. At its core is the VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
+                Viral Sentry AI is a cutting-edge platform designed to predict zoonotic potential in viruses, helping to identify emerging threats to public health. At its core is the VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. A LLM is used to understand the virus host if it is not present into the NCBI fields. For each possible zoonotic virus, a drug repurposing is done using PLAPT pre-trained models that is able to calculate the affiniy energy interactions between all the ChEMBL drugs and viral proteins. Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
               </p>
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Web Framework</h2>
@@ -116,8 +117,11 @@
                 <p><strong>Database</strong>: SQLite</p>
                 <p><strong>Frontend</strong>: HTML, JavaScript, Plotly, etc.</p>
                 <p><strong>Scanned database</strong>: NCBI - <a href="https://www.ncbi.nlm.nih.gov/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">https://www.ncbi.nlm.nih.gov/</a></p>
-                <p><strong>Input Data</strong>: The model is fed the complete DNA sequences of newly discovered viruses that have so far only been found in animals or other non-human hosts.</p>
-                <p><strong>Model Output</strong>: The model predicts the likelihood that the virus can cross over and infect humans, flagging it as a potential zoonotic risk.</p>
+                <p><strong>Virsentai Input Data</strong>: The model is fed the complete DNA sequences of newly discovered viruses that have so far only been found in animals or other non-human hosts.</p>
+                <p><strong>Virsentai Model Output</strong>: The model predicts the likelihood that the virus can cross over and infect humans, flagging it as a potential zoonotic risk.</p>
+				<p><strong>LLM to correct hosts</strong>:  Gemini-2 (gemma-2-9b-it-Q4_K_M.gguf in LM Studio) using two NCBI fields (DEFINITION and TITLE of the first publication).</p>
+				<p><strong>PLAPT pre-trained model</strong>: Automatic drug repurposing by calculating affinity energy interactions between current drugs and the proteins of the possible zoonotic viruses. Learn more about PLAPT on 
+				  <a href="https://github.com/trrt-good/WELP-PLAPT" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">https://github.com/trrt-good/WELP-PLAPT</a>.</p>
               </div>
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Our Team</h2>

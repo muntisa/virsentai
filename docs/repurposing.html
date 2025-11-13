@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Repurposing - PLAPT Affinity Dashboard</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* New Dark Theme Colors from index.html */
+        :root {
+            --bg-dark: #111518;
+            --border-dark: #2d363d;
+            --accent-red: #ff0000;
+            --accent-cyan: #00bcd4; /* For links/highlight */
+            --text-faded: #9cabba;
+            --text-strong: white;
+            --card-bg-dark: #1b2127; /* Slightly lighter dark for contrast */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Changed from gradient to dark background */
+            background-color: var(--bg-dark); 
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .glass-card {
+            /* Changed from light glass to dark card with border */
+            background: var(--bg-dark); 
+            border: 1px solid var(--border-dark);
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); /* Darker shadow */
+        }
+        
+        .btn-primary {
+            /* Primary button should use the Red accent */
+            background: var(--accent-red);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #cc0000; /* Slightly darker red */
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            /* Secondary button: faded text, red border, transparent background */
+            border: 2px solid var(--accent-red);
+            color: var(--text-faded);
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--accent-red);
+            color: white;
+        }
+        
+        .chart-container {
+            height: 400px;
+            position: relative;
+        }
+        
+        .network-container {
+            height: 500px;
+        }
+        
+        .data-table {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .table-header {
+            position: sticky;
+            top: 0;
+            /* Match index.html table header bg */
+            background: #1b2127; 
+            color: white;
+            z-index: 10;
+        }
+        
+        .table-row:hover {
+            background: rgba(45, 54, 61, 0.5); /* Darker hover */
+        }
+        
+        .filter-panel {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .search-input {
+            /* Dark theme search input */
+            background: var(--card-bg-dark);
+            color: var(--text-strong);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            border-color: var(--accent-red);
+            background: var(--bg-dark);
+        }
+
+        /* Select field dark theme adjustments: Set text color to white (var(--text-strong)) to match search input */
+        select {
+            background-color: var(--card-bg-dark);
+            color: var(--text-strong); 
+            border: 1px solid var(--border-dark);
+        }
+        
+        .sort-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: var(--text-faded);
+        }
+        
+        .sort-btn:hover {
+            color: var(--accent-red);
+        }
+        
+        .sort-btn.active {
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+        
+        .hero-section {
+            /* Remove the old gradient, use dark background */
+            background: var(--bg-dark); 
+            position: relative;
+            border-bottom: 1px solid var(--border-dark); 
+        }
+        
+        .typing-text, .page-title {
+            /* Title style matching index.html h1 */
+            color: var(--text-strong); 
+            font-weight: 700;
+            text-shadow: none; 
+        }
+        
+        .page-title {
+            font-size: 2rem;
+        }
+
+        /* NEW STYLE: Smaller font for chart axis labels to prevent cropping */
+        .small-axis-label * {
+            font-size: 10px !important; 
+        }
+        
+        @media (max-width: 768px) {
+            .typing-text {
+                font-size: 2rem;
+            }
+            .page-title {
+                font-size: 1.5rem;
+            }
+            .chart-container {
+                height: 300px;
+            }
+            .network-container {
+                height: 400px;
+            }
+        }
+        
+        /* particle-bg style removed as feature is removed */
+    </style>
+</head>
+<body>
+    
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2d363d] px-10 py-3">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-white">
+                <span class="text-[#ff0000] text-xl font-extrabold leading-none">></span>
+                <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">virsentai</h2>
+            </div>
+            <div class="flex items-center gap-9">
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./index.html">Overview</a> 
+                <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Drug Repurposing</a> <!-- Active Link -->
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
+            </div>
+        </div>
+        
+    </header>
+    
+
+    <section class="hero-section py-8 relative overflow-hidden">
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                
+                <h1 class="text-white tracking-light text-[32px] font-bold leading-tight mb-4">Autonomous Drug Repurposing for Zoonotic Viruses</h1>
+                <p class="text-lg  mb-6 max-w-3xl mx-auto text-[#9cabba]">
+                    Explore virus-protein-drug interactions through negative log affinity energies calculated with <a href="https://github.com/trrt-good/WELP-PLAPT" target="_blank">PLAPT</a> pre-trained deep learning model based on drug and protein embeddings. Interactive visualizations reveal potential drug repurposing opportunities.
+                </p>
+				
+                <div class="flex justify-center space-x-4">
+                    <button id="exportBtn" class="btn-primary px-8 py-3 rounded-lg font-semibold text-lg" onclick="dashboard.exportData()">
+                        Export CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 -mt-8 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="stat-card glass-card rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-white mb-1" id="totalInteractions">50</div>
+                    <div class="text-xs text-[--text-faded] uppercase tracking-wide">Interactions</div>
+                </div>
+                <div class="stat-card glass-card rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-white mb-1" id="avgAffinity">8.1</div>
+                    <div class="text-xs text-[--text-faded] uppercase tracking-wide">Avg Affinity</div>
+                </div>
+                <div class="stat-card glass-card rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-white mb-1" id="uniqueViruses">10</div>
+                    <div class="text-xs text-[--text-faded] uppercase tracking-wide">Viruses</div>
+                </div>
+                <div class="stat-card glass-card rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-white mb-1" id="uniqueDrugs">5</div>
+                    <div class="text-xs text-[--text-faded] uppercase tracking-wide">Drugs</div>
+                </div>
+                <div class="stat-card glass-card rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-white mb-1" id="uniqueProteins">20</div>
+                    <div class="text-xs text-[--text-faded] uppercase tracking-wide">Proteins</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard" class="py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-white mb-4">Filters & Controls</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Search</label>
+                        <input type="text" id="searchInput" placeholder="Search by ID or value..." 
+                               class="search-input w-full p-2 rounded-lg focus:outline-none text-sm">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Virus ID</label>
+                        <select id="virusFilter" class="w-full p-2 rounded-lg focus:ring-2 focus:ring-red-500 text-sm text-white">
+                            <option value="">All Viruses</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Protein ID</label>
+                        <select id="proteinFilter" class="w-full p-2 rounded-lg focus:ring-2 focus:ring-red-500 text-sm text-white">
+                            <option value="">All Proteins</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Drug ID</label>
+                        <select id="drugFilter" class="w-full p-2 rounded-lg focus:ring-2 focus:ring-red-500 text-sm text-white">
+                            <option value="">All Drugs</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <button onclick="resetFilters()" class="btn-secondary px-4 py-2 rounded-lg font-medium text-sm">
+                            Reset Filters
+                        </button>
+                        <span class="text-sm text-[--text-faded] self-center">
+                            Showing <span id="showingCount">50</span> of <span id="totalCount">50</span> records
+                        </span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-white">Binding Affinity Range:</label>
+                        <!-- min/max/value are set by JS -->
+                        <input type="range" id="minAffinity" min="6" max="11.5" step="0.1" value="6" class="w-20">
+                        <span id="minAffinityLabel" class="text-sm text-[--text-faded]">6.0</span>
+                        <span class="text-sm text-[--text-faded]">to</span>
+                        <input type="range" id="maxAffinity" min="6" max="11.5" step="0.1" value="11.5" class="w-20">
+                        <span id="maxAffinityLabel" class="text-sm text-[--text-faded]">11.5</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MODIFIED: Changed lg:grid-cols-2 to lg:grid-cols-1 for full-width plots -->
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8 mb-8">
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-white mb-4">Interaction Network</h3>
+                    <div id="networkGraph" class="chart-container network-container small-axis-label"></div>
+                </div>
+                
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-white mb-4">Virus-Drug Interactions Heatmap</h3>
+                    <div id="heatmapChart" class="chart-container small-axis-label"></div>
+                </div>
+                
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-white mb-4">Binding Affinity Distribution</h3>
+                    <div id="distributionChart" class="chart-container small-axis-label"></div>
+                </div>
+                
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-white mb-4">Top High-Affinity Interactions</h3>
+                    <div id="topInteractions" class="chart-container small-axis-label"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="data" class="py-12 bg-[--bg-dark]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">Interaction Data</h2>
+            
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-semibold text-white">Detailed Records</h3>
+                    <div class="flex space-x-2">
+                        <button onclick="sortData('neg_log10_affinity_M')" class="sort-btn px-3 py-1 text-sm font-medium">
+                            Sort by Affinity ↕
+                        </button>
+                        <button onclick="sortData('virus_id')" class="sort-btn px-3 py-1 text-sm font-medium">
+                            Sort by Virus ↕
+                        </button>
+                        <button onclick="sortData('drug_ID')" class="sort-btn px-3 py-1 text-sm font-medium">
+                            Sort by Drug ↕
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="data-table">
+                    <table class="w-full">
+                        <thead class="table-header">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-sm font-medium">Virus ID</th>
+                                <th class="px-3 py-2 text-left text-sm font-medium">Virus Name</th>
+                                <th class="px-3 py-2 text-left text-sm font-medium">Protein ID</th>
+                                <th class="px-3 py-2 text-left text-sm font-medium">Protein Name</th>
+                                <th class="px-3 py-2 text-left text-sm font-medium">Drug ID</th>
+                                <th class="px-3 py-2 text-left text-sm font-medium">Drug Name</th>
+                                <th class="px-3 py-2 text-left text-sm font-medium">Affinity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            </tbody>
+                    </table>
+                </div>
+                
+                <div class="flex justify-between items-center mt-6">
+                    <div class="text-sm text-[--text-faded]">
+                        Page <span id="currentPage">1</span> of <span id="totalPages">1</span>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="changePage(-1)" class="btn-secondary px-3 py-1 rounded-lg font-medium text-sm" id="prevBtn">
+                            Previous
+                        </button>
+                        <button onclick="changePage(1)" class="btn-secondary px-3 py-1 rounded-lg font-medium text-sm" id="nextBtn">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <footer class="text-center text-[#9cabba] py-8 mt-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>© 2025 Copyright by <a href="https://rnasa-imedir.udc.es/en/" class="text-white hover:text-[#ff0000]">RNASA</a>, <a href="https://citic.udc.es/en/home-english-2/" class="text-white hover:text-[#ff0000]">CITIC</a>, <a href="https://www.udc.es/en/" class="text-white hover:text-[#ff0000]">UDC</a>, Spain</p>
+        </div>
+    </footer>
+    
+    <!-- START: Embedded CSV Data -->
+    <script>
+        // MODIFIED HEADER: virus_id,virus_name,protein_id,protein_name,drug_ID,drug_name,neg_log10_affinity_M (7 columns)
+        window.RAW_CSV_DATA = `virus_id,virus_name,protein_id,protein_name,drug_ID,drug_name,neg_log10_affinity_M
+NC_019944.1,Okra enation leaf curl alphasatellite,YP_007250412.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.56933307647705
+NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.566658020019531
+NC_075123.1,Faba bean necrotic yellows C9 alphasatellite,YP_010782997.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.542759895324707
+NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.527618408203125
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077083.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.485185623168945
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19346.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.428180694580078
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40947.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.426803588867188
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19344.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.382997512817383
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40948.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.375601768493652
+NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.297192573547363
+NC_043142.1,Carrot virus Y,YP_009665126.1,*,CHEMBL2396661,ALPELISIB,11.027535438537598
+NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,11.001254081726074
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_006491215.1,*,CHEMBL2396661,ALPELISIB,10.998418807983398
+NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,*,CHEMBL2396661,ALPELISIB,10.99389934539795
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077082.1,*,CHEMBL2396661,ALPELISIB,10.986658096313477
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40952.1,*,CHEMBL2396661,ALPELISIB,10.978578567504883
+NC_029615.1,Lake Sarah-associated circular molecule 6,YP_009237564.1,*,CHEMBL2396661,ALPELISIB,10.977180480957031
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40949.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.975711822509766
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19343.1,*,CHEMBL2396661,ALPELISIB,10.962313652038574
+NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,*,CHEMBL2396661,ALPELISIB,10.961854934692383
+NC_043139.1,Araujia mosaic virus,YP_009665123.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.935457229614258
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL3039508,NALDEMEDINE TOSYLATE,10.927155494689941
+NC_004904.1,"Tomato begomovirus satellite DNA beta, complete genome",NP_859031.1,*,CHEMBL2396661,ALPELISIB,10.920272827148438
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077081.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.90025520324707
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40954.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.891688346862793
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40951.1,*,CHEMBL2396661,ALPELISIB,10.887876510620117
+NC_004199.1,"Kadipiro virus chromosome segment 12, complete genome",NP_694457.1,*,CHEMBL2396661,ALPELISIB,10.830513954162598
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19342.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.829263687133789
+NC_011502.2,"Rotavirus A segment 8, complete genome",YP_002302221.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.824495315551758
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40950.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.817251205444336
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077080.1,*,CHEMBL2396661,ALPELISIB,10.815774917602539
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_460043.1,*,CHEMBL2396661,ALPELISIB,10.799246788024902
+NC_038951.1,Wound tumor virus,YP_009508279.1,*,CHEMBL2396661,ALPELISIB,10.796321868896484
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40950.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.795991897583008
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19342.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.792140007019043
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40954.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.772115707397461
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077081.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.769255638122559
+NC_043139.1,Araujia mosaic virus,YP_009665123.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.757996559143066
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40949.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.741344451904297
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_460043.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.73873519897461
+NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.72956657409668
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL4435170,DEUCRAVACITINIB,10.714369773864746
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40950.1,*,CHEMBL2396661,ALPELISIB,10.67906379699707
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19342.1,*,CHEMBL2396661,ALPELISIB,10.674006462097168
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL1201127,DARUNAVIR ETHANOLATE,10.64840316772461
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40954.1,*,CHEMBL2396661,ALPELISIB,10.644828796386719
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077081.1,*,CHEMBL2396661,ALPELISIB,10.637714385986328
+NC_004904.1,"Tomato begomovirus satellite DNA beta, complete genome",NP_859031.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.614057540893555
+NC_043139.1,Araujia mosaic virus,YP_009665123.1,*,CHEMBL2396661,ALPELISIB,10.608657836914062
+NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,*,CHEMBL231779,APIXABAN,10.59668254852295
+NC_075123.1,Faba bean necrotic yellows C9 alphasatellite,YP_010782997.1,*,CHEMBL231779,APIXABAN,10.581485748291016
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40949.1,*,CHEMBL2396661,ALPELISIB,10.575380325317383
+NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,*,CHEMBL2396661,ALPELISIB,10.552751541137695
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077082.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.538869857788086
+NC_019944.1,Okra enation leaf curl alphasatellite,YP_007250412.1,*,CHEMBL231779,APIXABAN,10.528280258178711
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_460043.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.522916793823242
+NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,*,CHEMBL231779,APIXABAN,10.520588874816895
+NC_011502.2,"Rotavirus A segment 8, complete genome",YP_002302221.1,*,CHEMBL231779,APIXABAN,10.510457992553711
+NC_043142.1,Carrot virus Y,YP_009665126.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.4835205078125
+NC_011502.2,"Rotavirus A segment 8, complete genome",YP_002302221.1,*,CHEMBL4802249,LENACAPAVIR SODIUM,10.472829818725586
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.46944522857666
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077083.1,*,CHEMBL231779,APIXABAN,10.425908088684082
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077083.1,*,CHEMBL363392,MARALIXIBAT,10.398621559143066
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19346.1,*,CHEMBL363392,MARALIXIBAT,10.391488075256348
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40947.1,*,CHEMBL363392,MARALIXIBAT,10.390625
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_006491215.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.390013694763184
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL222559,TIPRANAVIR,10.376140594482422
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL857,BIOTIN,10.375265121459961
+NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.375192642211914
+NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,*,CHEMBL363392,MARALIXIBAT,10.367793083190918
+NC_019944.1,Okra enation leaf curl alphasatellite,YP_007250412.1,*,CHEMBL363392,MARALIXIBAT,10.362701416015625
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19346.1,*,CHEMBL231779,APIXABAN,10.35830020904541
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19344.1,*,CHEMBL363392,MARALIXIBAT,10.356466293334961
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40947.1,*,CHEMBL231779,APIXABAN,10.356208801269531
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40948.1,*,CHEMBL363392,MARALIXIBAT,10.347017288208008
+NC_011502.2,"Rotavirus A segment 8, complete genome",YP_002302221.1,*,CHEMBL222559,TIPRANAVIR,10.341959953308105
+NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,*,CHEMBL222559,TIPRANAVIR,10.341107368469238
+NC_075123.1,Faba bean necrotic yellows C9 alphasatellite,YP_010782997.1,*,CHEMBL363392,MARALIXIBAT,10.33187198638916
+NC_075123.1,Faba bean necrotic yellows C9 alphasatellite,YP_010782997.1,*,CHEMBL222559,TIPRANAVIR,10.324843406677246
+NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,*,CHEMBL363392,MARALIXIBAT,10.323427200317383
+NC_011502.2,"Rotavirus A segment 8, complete genome",YP_002302221.1,*,CHEMBL857,BIOTIN,10.295637130737305
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19344.1,*,CHEMBL231779,APIXABAN,10.272018432617188
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40952.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.27055549621582
+NC_029615.1,Lake Sarah-associated circular molecule 6,YP_009237564.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.268379211425781
+NC_004904.1,"Tomato begomovirus satellite DNA beta, complete genome",NP_859031.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.262130737304688
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_006491215.1,*,CHEMBL186,CEFEPIME,10.258504867553711
+NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,*,CHEMBL186,CEFEPIME,10.257912635803223
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40948.1,*,CHEMBL231779,APIXABAN,10.25688362121582
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077082.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.254264831542969
+NC_043142.1,Carrot virus Y,YP_009665126.1,*,CHEMBL186,CEFEPIME,10.252388954162598
+NC_043142.1,Carrot virus Y,YP_009665126.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.250123023986816
+NC_019944.1,Okra enation leaf curl alphasatellite,YP_007250412.1,*,CHEMBL222559,TIPRANAVIR,10.24945068359375
+NC_029615.1,Lake Sarah-associated circular molecule 6,YP_009237564.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.245862007141113
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40952.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.245250701904297
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19343.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.242330551147461
+NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.241692543029785
+NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.239624977111816
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19343.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.239248275756836
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077082.1,*,CHEMBL186,CEFEPIME,10.238728523254395
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_006491215.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.23680591583252
+NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.235918998718262
+NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,*,CHEMBL222559,TIPRANAVIR,10.234811782836914
+NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.233564376831055
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_006491215.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.233505249023438
+NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.222773551940918
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40952.1,*,CHEMBL186,CEFEPIME,10.218942642211914
+NC_043142.1,Carrot virus Y,YP_009665126.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.217806816101074
+NC_029615.1,Lake Sarah-associated circular molecule 6,YP_009237564.1,*,CHEMBL186,CEFEPIME,10.21184253692627
+NC_004904.1,"Tomato begomovirus satellite DNA beta, complete genome",NP_859031.1,*,CHEMBL186,CEFEPIME,10.207966804504395
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077082.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.207928657531738
+NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,*,CHEMBL363392,MARALIXIBAT,10.207571983337402
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40952.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.206964492797852
+NC_029615.1,Lake Sarah-associated circular molecule 6,YP_009237564.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.20482063293457
+NC_004904.1,"Tomato begomovirus satellite DNA beta, complete genome",NP_859031.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.192205429077148
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19343.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.177536010742188
+NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.176877975463867
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL1200517,DIHYDROERGOTAMINE MESYLATE,10.171158790588379
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_460043.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.165535926818848
+NC_007753.1,"Peruvian horse sickness virus segment 9, complete genome",YP_460043.1,*,CHEMBL186,CEFEPIME,10.158245086669922
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL1479,DANAZOL,10.157218933105469
+NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,*,CHEMBL231779,APIXABAN,10.150369644165039
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL1593906,LEVOPROPOXYPHENE NAPSYLATE,10.144426345825195
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL1323,DARUNAVIR,10.136407852172852
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40950.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.127913475036621
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19342.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.125700950622559
+NC_004053.1,"Ophiostoma mitovirus 5, complete genome",NP_660180.1,*,CHEMBL2396661,ALPELISIB,10.119566917419434
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19343.1,*,CHEMBL186,CEFEPIME,10.118122100830078
+NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,*,CHEMBL186,CEFEPIME,10.11574649810791
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40954.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.111891746520996
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077081.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.109292030334473
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL46286,OMACETAXINE MEPESUCCINATE,10.10550308227539
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40950.1,*,CHEMBL186,CEFEPIME,10.10544490814209
+MN311493.1,"Antarctic microvirus TYR_006_V_SP_13, complete genome",QGF19342.1,*,CHEMBL186,CEFEPIME,10.10328483581543
+NC_043139.1,Araujia mosaic virus,YP_009665123.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.098994255065918
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40951.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.096244812011719
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40951.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.095796585083008
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40954.1,*,CHEMBL186,CEFEPIME,10.092048645019531
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077081.1,*,CHEMBL186,CEFEPIME,10.090401649475098
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40949.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.087117195129395
+NC_043139.1,Araujia mosaic virus,YP_009665123.1,*,CHEMBL186,CEFEPIME,10.084067344665527
+NC_004199.1,"Kadipiro virus chromosome segment 12, complete genome",NP_694457.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.0828218460083
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077083.1,*,CHEMBL222559,TIPRANAVIR,10.082018852233887
+NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.079071044921875
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077080.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.078956604003906
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40949.1,*,CHEMBL186,CEFEPIME,10.076634407043457
+NC_038951.1,Wound tumor virus,YP_009508279.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.07391357421875
+NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,*,CHEMBL64391,ITRACONAZOLE,10.072036743164062
+NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,*,CHEMBL186,CEFEPIME,10.071427345275879
+NC_075123.1,Faba bean necrotic yellows C9 alphasatellite,YP_010782997.1,*,CHEMBL64391,ITRACONAZOLE,10.041894912719727
+NC_004053.1,"Ophiostoma mitovirus 5, complete genome",NP_660180.1,*,CHEMBL17879,MARALIXIBAT CHLORIDE,10.03192138671875
+NC_004199.1,"Kadipiro virus chromosome segment 12, complete genome",NP_694457.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.031296730041504
+NC_043126.1,Longquan virus,YP_009664869.1,*,CHEMBL363392,MARALIXIBAT,10.017457008361816
+NC_001753.1,"Clover yellow mosaic virus, complete genome",NP_077080.1,*,CHEMBL2042122,FLUTEMETAMOL F 18,10.014610290527344
+OM869523.1,"Sigmofec virus UA08Rod_6044, complete genome",UPW40951.1,*,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.009384155273438
+NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,*,CHEMBL2396661,ALPELISIB,10.00223159790039`;
+    </script>
+    
+    <!-- START: Embedded main.js logic -->
+    <script>
+        // Drug Repurposing Dashboard JavaScript
+class DrugRepurposingDashboard {
+    constructor() {
+        this.data = [];
+        this.filteredData = [];
+        this.charts = {};
+        this.currentPage = 1;
+        this.itemsPerPage = 20;
+        this.sortColumn = 'neg_log10_affinity_M';
+        this.sortDirection = 'desc';
+        this.init();
+    }
+
+    async init() {
+        this.loadData();
+        this.setupAffinityRange(); // New step to set dynamic min/max
+        this.setupEventListeners();
+        this.populateFilters();
+        this.initializeCharts();
+        this.renderTable();
+        this.updateStatistics();
+    }
+
+    loadData() { 
+        const csvText = window.RAW_CSV_DATA; 
+        const csvFilePath = 'RAW_CSV_DATA (Embedded)'; 
+
+        try {
+            if (!csvText) {
+                 throw new Error(`Global variable RAW_CSV_DATA is empty or not defined.`);
+            }
+
+            // 2. Simple Manual CSV Parsing
+            const rows = csvText.trim().split('\n');
+            // Headers are the first row, map to clean names
+            const headers = rows[0].split(',').map(header => header.trim());
+            const expectedColumns = 7; 
+
+            this.data = rows.slice(1).map(row => {
+                const values = row.split(',').map(v => v.trim());
+                if (values.length !== expectedColumns) return null; 
+                
+                const record = {};
+                
+                headers.forEach((header, i) => {
+                    let value = values[i];
+                    
+                    if (header === 'neg_log10_affinity_M') {
+                        record[header] = parseFloat(value);
+                    } else {
+                        record[header] = value;
+                    }
+                });
+                
+                record.virus_id = record.virus_id; 
+                record.protein_id = record.protein_id;
+                record.drug_ID = record.drug_ID;
+
+                return record;
+            }).filter(record => record !== null && record.neg_log10_affinity_M > 0); 
+
+            this.filteredData = [...this.data];
+            console.log(`Successfully loaded ${this.data.length} records from ${csvFilePath}.`);
+
+        } catch (error) {
+            console.error("Error loading data:", error);
+            this.data = [];
+            this.filteredData = [];
+            alert(`Failed to load data. Check the console for details.`);
+        }
+    }
+    
+    /**
+     * NEW METHOD: Calculates min/max affinity and sets the slider properties and labels.
+     */
+    setupAffinityRange() {
+        if (this.data.length === 0) return;
+
+        const affinities = this.data.map(d => d.neg_log10_affinity_M);
+        const minAffinityValue = Math.floor(Math.min(...affinities) * 10) / 10;
+        const maxAffinityValue = Math.ceil(Math.max(...affinities) * 10) / 10;
+        
+        const minSlider = document.getElementById('minAffinity');
+        const maxSlider = document.getElementById('maxAffinity');
+        const minLabel = document.getElementById('minAffinityLabel');
+        const maxLabel = document.getElementById('maxAffinityLabel');
+
+        // Set min/max attributes on both sliders
+        minSlider.min = minAffinityValue;
+        minSlider.max = maxAffinityValue;
+        maxSlider.min = minAffinityValue;
+        maxSlider.max = maxAffinityValue;
+
+        // Set initial values and labels
+        minSlider.value = minAffinityValue;
+        maxSlider.value = maxAffinityValue;
+        minLabel.textContent = minAffinityValue.toFixed(1);
+        maxLabel.textContent = maxAffinityValue.toFixed(1);
+    }
+    
+    setupEventListeners() {
+        document.getElementById('searchInput').addEventListener('input', () => this.applyFilters());
+        document.getElementById('virusFilter').addEventListener('change', () => this.applyFilters());
+        document.getElementById('proteinFilter').addEventListener('change', () => this.applyFilters());
+        document.getElementById('drugFilter').addEventListener('change', () => this.applyFilters());
+        
+        // Use a single function for both sliders to ensure min <= max
+        const handleAffinityChange = () => {
+            let minVal = parseFloat(document.getElementById('minAffinity').value);
+            let maxVal = parseFloat(document.getElementById('maxAffinity').value);
+            
+            // Ensure min <= max
+            if (minVal > maxVal) {
+                document.getElementById('minAffinity').value = maxVal;
+                minVal = maxVal;
+            }
+
+            document.getElementById('minAffinityLabel').textContent = minVal.toFixed(1);
+            document.getElementById('maxAffinityLabel').textContent = maxVal.toFixed(1);
+            this.applyFilters();
+        };
+
+        document.getElementById('minAffinity').addEventListener('input', handleAffinityChange);
+        document.getElementById('maxAffinity').addEventListener('input', handleAffinityChange);
+
+        // Window resize
+        window.addEventListener('resize', () => this.handleResize());
+    }
+
+    populateFilters() {
+        const viruses = [...new Set(this.data.map(d => d.virus_id))].sort();
+        const proteins = [...new Set(this.data.map(d => d.protein_id))].sort();
+        const drugs = [...new Set(this.data.map(d => d.drug_ID))].sort();
+
+        // Populate virus filter
+        const virusSelect = document.getElementById('virusFilter');
+        virusSelect.innerHTML = '<option value="">All Viruses</option>';
+        viruses.forEach(virus => {
+            const option = document.createElement('option');
+            option.value = virus;
+            option.textContent = virus;
+            virusSelect.appendChild(option);
+        });
+
+        // Populate protein filter
+        const proteinSelect = document.getElementById('proteinFilter');
+        proteinSelect.innerHTML = '<option value="">All Proteins</option>';
+        proteins.forEach(protein => {
+            const option = document.createElement('option');
+            option.value = protein;
+            option.textContent = protein;
+            proteinSelect.appendChild(option);
+        });
+
+        // Populate drug filter
+        const drugSelect = document.getElementById('drugFilter');
+        drugSelect.innerHTML = '<option value="">All Drugs</option>';
+        drugs.forEach(drug => {
+            const option = document.createElement('option');
+            option.value = drug;
+            option.textContent = drug;
+            drugSelect.appendChild(option);
+        });
+    }
+
+    applyFilters() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const selectedVirus = document.getElementById('virusFilter').value;
+        const selectedProtein = document.getElementById('proteinFilter').value;
+        const selectedDrug = document.getElementById('drugFilter').value;
+        const minAffinity = parseFloat(document.getElementById('minAffinity').value);
+        const maxAffinity = parseFloat(document.getElementById('maxAffinity').value);
+
+        this.filteredData = this.data.filter(item => {
+            const matchesSearch = !searchTerm || 
+                [item.virus_id, item.virus_name, item.protein_id, item.protein_name, item.drug_ID, item.drug_name].some(value => 
+                    value.toString().toLowerCase().includes(searchTerm)
+                );
+            const matchesVirus = !selectedVirus || item.virus_id === selectedVirus;
+            const matchesProtein = !selectedProtein || item.protein_id === selectedProtein;
+            const matchesDrug = !selectedDrug || item.drug_ID === selectedDrug;
+            const matchesAffinity = item.neg_log10_affinity_M >= minAffinity && item.neg_log10_affinity_M <= maxAffinity;
+
+            return matchesSearch && matchesVirus && matchesProtein && matchesDrug && matchesAffinity;
+        });
+
+        this.currentPage = 1;
+        this.updateAllComponents();
+    }
+
+    updateAllComponents() {
+        this.updateStatistics();
+        this.updateCharts();
+        this.renderTable();
+        this.updatePaginationInfo();
+    }
+
+    updateStatistics() {
+        const totalInteractions = this.filteredData.length;
+        const avgAffinity = totalInteractions > 0 
+            ? (this.filteredData.reduce((sum, item) => sum + item.neg_log10_affinity_M, 0) / totalInteractions).toFixed(1)
+            : '0.0';
+        const uniqueViruses = new Set(this.filteredData.map(d => d.virus_id)).size;
+        const uniqueDrugs = new Set(this.filteredData.map(d => d.drug_ID)).size;
+        const uniqueProteins = new Set(this.filteredData.map(d => d.protein_id)).size;
+
+        this.animateCounter('totalInteractions', totalInteractions);
+        this.animateCounter('avgAffinity', parseFloat(avgAffinity));
+        this.animateCounter('uniqueViruses', uniqueViruses);
+        this.animateCounter('uniqueDrugs', uniqueDrugs);
+        this.animateCounter('uniqueProteins', uniqueProteins);
+
+        document.getElementById('showingCount').textContent = totalInteractions;
+    }
+
+    animateCounter(elementId, targetValue) {
+        const element = document.getElementById(elementId);
+        const startValue = parseFloat(element.textContent) || 0;
+        
+        anime({
+            targets: { value: startValue },
+            value: targetValue,
+            duration: 1000,
+            easing: 'easeOutQuart',
+            update: function(anim) {
+                const currentValue = anim.animatables[0].target.value;
+                element.textContent = elementId === 'avgAffinity' 
+                    ? currentValue.toFixed(1) 
+                    : Math.round(currentValue);
+            }
+        });
+    }
+
+    initializeCharts() {
+        this.initNetworkGraph();
+        this.initHeatmap();
+        this.initDistributionChart();
+        this.initTopInteractions();
+    }
+
+    initNetworkGraph() {
+        const chartDom = document.getElementById('networkGraph');
+        if (this.charts.network) {
+            this.charts.network.dispose(); 
+        }
+        this.charts.network = echarts.init(chartDom);
+        this.updateNetworkGraph();
+    }
+
+    updateNetworkGraph() {
+        const nodes = this.createNetworkNodes();
+        const links = this.createNetworkLinks();
+
+        const RED = '#ff0000';
+        const CYAN = '#00bcd4';
+        const WHITE = '#ffffff';
+
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'item',
+                formatter: function(params) {
+                    if (params.dataType === 'node') {
+                        return `${params.data.category}: ${params.data.name}<br/>Interactions: ${params.data.interactions}`;
+                    } else {
+                        return `Affinity: ${params.data.affinity.toFixed(2)}`;
+                    }
+                },
+                backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+                textStyle: { color: WHITE }
+            },
+            legend: {
+                data: ['Virus', 'Protein', 'Drug'],
+                bottom: 10,
+                textStyle: { color: 'var(--text-faded)' } 
+            },
+            series: [{
+                type: 'graph',
+                layout: 'force',
+                data: nodes,
+                links: links,
+                categories: [
+                    { name: 'Virus', itemStyle: { color: RED } },      
+                    { name: 'Protein', itemStyle: { color: CYAN } },   
+                    { name: 'Drug', itemStyle: { color: WHITE } }    
+                ],
+                roam: true,
+                force: {
+                    repulsion: 1000,
+                    gravity: 0.1,
+                    edgeLength: 150
+                },
+                emphasis: {
+                    focus: 'adjacency',
+                    lineStyle: {
+                        width: 10
+                    }
+                },
+                lineStyle: {
+                    color: 'source',
+                    curveness: 0.3,
+                    opacity: 0.7
+                },
+                label: {
+                    show: true,
+                    position: 'bottom',
+                    formatter: '{b}',
+                    fontSize: 10,
+                    color: WHITE 
+                }
+            }]
+        };
+
+        this.charts.network.setOption(option, true); 
+    }
+
+    createNetworkNodes() {
+        const nodes = [];
+        
+        const viruses = [...new Set(this.filteredData.map(d => d.virus_id))];
+        viruses.forEach(virus => {
+            const interactions = this.filteredData.filter(d => d.virus_id === virus).length;
+            nodes.push({
+                id: virus,
+                name: virus,
+                category: 0,
+                symbolSize: Math.max(20, interactions * 3),
+                interactions: interactions
+            });
+        });
+
+        const proteins = [...new Set(this.filteredData.map(d => d.protein_id))];
+        proteins.forEach(protein => {
+            const interactions = this.filteredData.filter(d => d.protein_id === protein).length;
+            nodes.push({
+                id: protein,
+                name: protein,
+                category: 1,
+                symbolSize: Math.max(15, interactions * 2),
+                interactions: interactions
+            });
+        });
+
+        const drugs = [...new Set(this.filteredData.map(d => d.drug_ID))];
+        drugs.forEach(drug => {
+            const interactions = this.filteredData.filter(d => d.drug_ID === drug).length;
+            nodes.push({
+                id: drug,
+                name: drug,
+                category: 2,
+                symbolSize: Math.max(15, interactions * 2),
+                interactions: interactions
+            });
+        });
+
+        return nodes;
+    }
+
+    createNetworkLinks() {
+        const links = [];
+        
+        this.filteredData.forEach(item => {
+            // Virus to Protein
+            links.push({
+                source: item.virus_id,
+                target: item.protein_id,
+                affinity: item.neg_log10_affinity_M,
+                lineStyle: { width: Math.max(1, item.neg_log10_affinity_M - 5) }
+            });
+            
+            // Protein to Drug
+            links.push({
+                source: item.protein_id,
+                target: item.drug_ID,
+                affinity: item.neg_log10_affinity_M,
+                lineStyle: { width: Math.max(1, item.neg_log10_affinity_M - 5) }
+            });
+        });
+
+        return links;
+    }
+
+    initHeatmap() {
+        const chartDom = document.getElementById('heatmapChart');
+        if (this.charts.heatmap) {
+            this.charts.heatmap.dispose();
+        }
+        this.charts.heatmap = echarts.init(chartDom);
+        this.updateHeatmap();
+    }
+
+    updateHeatmap() {
+        const viruses = [...new Set(this.filteredData.map(d => d.virus_id))];
+        const drugs = [...new Set(this.filteredData.map(d => d.drug_ID))];
+        const affinities = this.filteredData.map(d => d.neg_log10_affinity_M).filter(a => a > 0);
+        
+        const data = [];
+        viruses.forEach((virus, i) => {
+            drugs.forEach((drug, j) => {
+                const interactions = this.filteredData.filter(d => d.virus_id === virus && d.drug_ID === drug);
+                const avgAffinity = interactions.length > 0 
+                    ? interactions.reduce((sum, d) => sum + d.neg_log10_affinity_M, 0) / interactions.length
+                    : 0;
+                data.push([i, j, avgAffinity]);
+            });
+        });
+        
+        const DARK_BG = '#111518';
+        const FADED_TEXT = '#9cabba';
+        const RED = '#ff0000';
+        
+        // Dynamic limits for visualMap
+        const minVal = affinities.length > 0 ? Math.floor(Math.min(...affinities) * 10) / 10 : 6.0;
+        const maxVal = affinities.length > 0 ? Math.ceil(Math.max(...affinities) * 10) / 10 : 11.5;
+
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                position: 'top',
+                formatter: (params) => {
+                    const virus = viruses[params.data[0]];
+                    const drug = drugs[params.data[1]];
+                    return `${virus} - ${drug}<br/>Avg Affinity: ${params.data[2].toFixed(2)}`;
+                },
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                textStyle: { color: 'white' }
+            },
+            grid: {
+                height: '70%',
+                top: '5%',
+                left: '20%', // Increased left margin for Y-axis labels
+                right: '4%',
+                bottom: '20%' // Increased bottom margin to accommodate VisualMap below the plot
+            },
+            xAxis: {
+                type: 'category',
+                data: viruses,
+                splitArea: { show: true, areaStyle: { color: DARK_BG } },
+                axisLabel: { color: FADED_TEXT },
+                axisLine: { lineStyle: { color: FADED_TEXT } }
+            },
+            yAxis: {
+                type: 'category',
+                data: drugs,
+                splitArea: { show: true, areaStyle: { color: DARK_BG } },
+                // Ensured space for the whole label (max 10 drugs/5 viruses, so this should be fine)
+                axisLabel: { color: FADED_TEXT, margin: 15 },
+                axisLine: { lineStyle: { color: FADED_TEXT } }
+            },
+            visualMap: {
+                min: minVal, // Dynamic min
+                max: maxVal, // Dynamic max
+                calculable: true,
+                orient: 'horizontal',
+                left: 'center',
+                bottom: '5%', // Moved to the bottom of the chart container
+                textStyle: { color: FADED_TEXT },
+                inRange: { 
+                    color: [DARK_BG, FADED_TEXT, RED]
+                }
+            },
+            series: [{
+                name: 'Affinity',
+                type: 'heatmap',
+                data: data,
+                label: {
+                    show: true,
+                    formatter: (params) => {
+                        return params.data[2] > 0 ? params.data[2].toFixed(1) : '';
+                    },
+                    color: 'white' 
+                }
+            }]
+        };
+
+        this.charts.heatmap.setOption(option, true);
+    }
+
+    initDistributionChart() {
+        const chartDom = document.getElementById('distributionChart');
+        if (this.charts.distribution) {
+            this.charts.distribution.dispose();
+        }
+        this.charts.distribution = echarts.init(chartDom);
+        this.updateDistributionChart();
+    }
+
+    updateDistributionChart() {
+        const affinityValues = this.filteredData.map(d => d.neg_log10_affinity_M);
+        
+        if (affinityValues.length === 0) {
+            const option = {
+                backgroundColor: 'transparent',
+                title: {
+                    text: 'No data to display',
+                    left: 'center',
+                    top: 'middle',
+                    textStyle: { color: 'var(--text-faded)' }
+                }
+            };
+            this.charts.distribution.setOption(option, true);
+            return;
+        }
+        
+        const DARK_RED = '#3f191b';
+        const RED = '#ff0000';
+        const FADED_TEXT = '#9cabba';
+
+        const min = Math.floor(Math.min(...this.data.map(d => d.neg_log10_affinity_M)) * 10) / 10;
+        const max = Math.ceil(Math.max(...this.data.map(d => d.neg_log10_affinity_M)) * 10) / 10;
+        const bins = 10;
+        const binWidth = (max - min) / bins;
+
+        const histogram = [];
+        for (let i = 0; i < bins; i++) {
+            const binStart = min + i * binWidth;
+            const binEnd = binStart + binWidth;
+            const count = affinityValues.filter(v => v >= binStart && v < binEnd).length;
+            histogram.push([binStart.toFixed(1), count]); 
+        }
+
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { type: 'shadow' },
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                textStyle: { color: 'white' }
+            },
+            grid: {
+                left: '5%',
+                right: '4%',
+                bottom: '10%', // Increased bottom margin to prevent x-axis label clipping
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: histogram.map(h => h[0]),
+                name: 'Affinity',
+                nameLocation: 'middle',
+                nameGap: 30,
+                axisLabel: {
+                    fontSize: 10,
+                    interval: 0,
+                    rotate: 45,
+                    color: FADED_TEXT
+                },
+                axisLine: { lineStyle: { color: FADED_TEXT } }
+            },
+            yAxis: {
+                type: 'value',
+                name: 'Frequency',
+                nameLocation: 'middle',
+                nameGap: 35, // Increased gap for Y-axis name
+                axisLabel: {
+                    fontSize: 10,
+                    color: FADED_TEXT
+                },
+                axisLine: { lineStyle: { color: FADED_TEXT } },
+                splitLine: { lineStyle: { color: 'var(--border-dark)' } }
+            },
+            series: [{
+                data: histogram.map(h => h[1]),
+                type: 'bar',
+                itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: RED },
+                        { offset: 1, color: DARK_RED }
+                    ])
+                }
+            }]
+        };
+
+        this.charts.distribution.setOption(option, true);
+    }
+
+    initTopInteractions() {
+        const chartDom = document.getElementById('topInteractions');
+        if (this.charts.topInteractions) {
+            this.charts.topInteractions.dispose();
+        }
+        this.charts.topInteractions = echarts.init(chartDom);
+        this.updateTopInteractions();
+    }
+
+    updateTopInteractions() {
+        const MIN_AFFINITY_THRESHOLD = 11.0;
+        const highAffinityData = this.filteredData.filter(d => d.neg_log10_affinity_M >= MIN_AFFINITY_THRESHOLD);
+        const topData = highAffinityData
+            .sort((a, b) => b.neg_log10_affinity_M - a.neg_log10_affinity_M)
+            .slice(0, 30);
+
+        if (topData.length === 0) {
+            const option = {
+                backgroundColor: 'transparent',
+                title: {
+                    text: `No high-affinity interactions (≥${MIN_AFFINITY_THRESHOLD.toFixed(1)}) found`,
+                    left: 'center',
+                    top: 'middle',
+                    textStyle: { color: 'var(--text-faded)', fontSize: 14 }
+                }
+            };
+            this.charts.topInteractions.setOption(option, true);
+            return;
+        }
+
+        const RED = '#ff0000';
+        const CYAN = '#00bcd4';
+        const WHITE = '#ffffff';
+        const FADED_TEXT = '#9cabba';
+
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { type: 'shadow' },
+                formatter: function(params) {
+                    const data = params[0];
+                    return `${data.name}<br/>Affinity: ${data.value.toFixed(2)}`;
+                },
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                textStyle: { color: 'white' }
+            },
+            grid: {
+                left: '5%', // Increased left margin to make y-axis labels visible
+                right: '4%',
+                bottom: '10%', // Increased bottom margin to make x-axis name visible
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                name: 'Affinity', 
+                nameLocation: 'middle',
+                nameGap: 30, // Increased gap for X-axis name
+                min: MIN_AFFINITY_THRESHOLD,
+                max: Math.max(MIN_AFFINITY_THRESHOLD + 0.5, Math.ceil(Math.max(...topData.map(d => d.neg_log10_affinity_M)) * 10) / 10),
+                axisLabel: { color: FADED_TEXT },
+                axisLine: { lineStyle: { color: FADED_TEXT } },
+                splitLine: { lineStyle: { color: 'var(--border-dark)' } }
+            },
+            yAxis: {
+                type: 'category',
+                data: topData.map((d) => `${d.virus_id}-${d.protein_id}-${d.drug_ID.substring(6, 12)}`),
+                inverse: true,
+                axisLabel: {
+                    fontSize: 10,
+                    interval: 0,
+                    color: FADED_TEXT
+                },
+                axisLine: { lineStyle: { color: FADED_TEXT } }
+            },
+            series: [{
+                data: topData.map(d => d.neg_log10_affinity_M),
+                type: 'bar',
+                itemStyle: {
+                    color: (params) => {
+                        const colors = [RED, CYAN, WHITE];
+                        return colors[params.dataIndex % colors.length];
+                    }
+                },
+                markLine: {
+                    data: [] 
+                }
+            }]
+        };
+
+        this.charts.topInteractions.setOption(option, true);
+    }
+
+    updateCharts() {
+        if (this.charts.network) this.updateNetworkGraph();
+        if (this.charts.heatmap) this.updateHeatmap();
+        if (this.charts.distribution) this.updateDistributionChart();
+        if (this.charts.topInteractions) this.updateTopInteractions();
+    }
+
+    renderTable() {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const pageData = this.filteredData.slice(startIndex, endIndex);
+
+        const tbody = document.getElementById('dataTableBody');
+        tbody.innerHTML = '';
+
+        if (pageData.length === 0) {
+            const row = document.createElement('tr');
+            // Colspan is 7 for the new 7 columns
+            row.innerHTML = `
+                <td colspan="7" class="px-3 py-4 text-center text-[--text-faded]">
+                    No data matches the current filters
+                </td>
+            `;
+            tbody.appendChild(row);
+            return;
+        }
+
+        pageData.forEach(item => {
+            // Define Links with requested format
+            const virusLink = `https://www.ncbi.nlm.nih.gov/search/all/?term=${item.virus_id}`;
+            const proteinLink = `https://www.ncbi.nlm.nih.gov/protein/${item.protein_id}`;
+            const drugLink = `https://www.ebi.ac.uk/chembl/explore/compound/${item.drug_ID}`;
+
+            const row = document.createElement('tr');
+            row.className = 'table-row border-b border-[--border-dark]'; 
+            
+            // Use --text-faded color for ID links and Avg Affinity text
+            const linkTextColor = 'text-cyan-400'; 
+            const hoverClass = 'hover:text-[#ff0000]';
+
+            row.innerHTML = `
+                <!-- Virus ID & Name -->
+                <td class="h-[72px] px-4 py-2 text-sm font-medium">
+                    <a href="${virusLink}" target="_blank" class="${linkTextColor} ${hoverClass}">${item.virus_id}</a>
+                </td>
+                <td class="px-3 py-2 text-sm text-white">${item.virus_name}</td>
+                
+                <!-- Protein ID & Name -->
+                <td class="h-[72px] px-4 py-2 text-sm font-mono">
+                    <a href="${proteinLink}" target="_blank" class="${linkTextColor} ${hoverClass}">${item.protein_id}</a>
+                </td>
+                <td class="px-3 py-2 text-sm text-white">${item.protein_name}</td>
+                
+                <!-- Drug ID & Name -->
+                <td class="h-[72px] px-4 py-2 text-sm font-medium font-mono">
+                    <a href="${drugLink}" target="_blank" class="${linkTextColor} ${hoverClass}">${item.drug_ID}</a>
+                </td>
+                <td class="px-3 py-2 text-sm text-white">${item.drug_name}</td>
+
+                <!-- Affinity -->
+                <td class="px-3 py-2 text-sm font-semibold text-white">${item.neg_log10_affinity_M.toFixed(1)}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        this.updatePaginationInfo();
+    }
+
+    updatePaginationInfo() {
+        const totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+        
+        document.getElementById('currentPage').textContent = this.currentPage;
+        document.getElementById('totalPages').textContent = totalPages;
+        document.getElementById('prevBtn').disabled = this.currentPage === 1;
+        document.getElementById('nextBtn').disabled = this.currentPage === totalPages || totalPages === 0;
+    }
+
+    sortData(column) {
+        if (this.sortColumn === column) {
+            this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            this.sortColumn = column;
+            this.sortDirection = 'asc';
+        }
+
+        this.filteredData.sort((a, b) => {
+            let aVal = a[column];
+            let bVal = b[column];
+            
+            if (typeof aVal === 'string') {
+                aVal = aVal.toLowerCase();
+                bVal = bVal.toLowerCase();
+            }
+
+            if (this.sortDirection === 'asc') {
+                return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+            } else {
+                return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+            }
+        });
+
+        this.renderTable();
+        this.updateCharts();
+    }
+
+    changePage(direction) {
+        const totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+        const newPage = this.currentPage + direction;
+        
+        if (newPage >= 1 && newPage <= totalPages) {
+            this.currentPage = newPage;
+            this.renderTable();
+        }
+    }
+
+    exportData() {
+        if (this.filteredData.length === 0) {
+            alert('No data to export');
+            return;
+        }
+
+        const csvContent = this.convertToCSV(this.filteredData);
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `drug_repurposing_data_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+
+    convertToCSV(data) {
+        // MODIFIED HEADER for export
+        const headers = ['virus_id', 'virus_name', 'protein_id', 'protein_name', 'drug_ID', 'drug_name', 'neg_log10_affinity_M'];
+        const csvRows = [headers.join(',')];
+        
+        data.forEach(row => {
+            const values = headers.map(header => row[header]);
+            csvRows.push(values.join(','));
+        });
+        
+        return csvRows.join('\n');
+    }
+    
+    handleResize() {
+        Object.values(this.charts).forEach(chart => {
+            if (chart) {
+                chart.resize();
+            }
+        });
+    }
+}
+
+// Utility functions
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function resetFilters() {
+    const dashboardInstance = dashboard; // Reference the global instance
+    if (!dashboardInstance || dashboardInstance.data.length === 0) return;
+
+    const minAffinityValue = parseFloat(dashboardInstance.data.map(d => d.neg_log10_affinity_M).reduce((min, current) => Math.min(min, current), Infinity)).toFixed(1);
+    const maxAffinityValue = parseFloat(dashboardInstance.data.map(d => d.neg_log10_affinity_M).reduce((max, current) => Math.max(max, current), -Infinity)).toFixed(1);
+
+    document.getElementById('searchInput').value = '';
+    document.getElementById('virusFilter').value = '';
+    document.getElementById('proteinFilter').value = '';
+    document.getElementById('drugFilter').value = '';
+    
+    // Set slider to calculated min/max
+    document.getElementById('minAffinity').value = minAffinityValue;
+    document.getElementById('maxAffinity').value = maxAffinityValue;
+    document.getElementById('minAffinityLabel').textContent = minAffinityValue;
+    document.getElementById('maxAffinityLabel').textContent = maxAffinityValue;
+    
+    dashboardInstance.applyFilters();
+}
+
+function sortData(column) {
+    dashboard.sortData(column);
+}
+
+function changePage(direction) {
+    dashboard.changePage(direction);
+}
+
+// Initialize dashboard when DOM is loaded
+let dashboard;
+document.addEventListener('DOMContentLoaded', () => {
+    dashboard = new DrugRepurposingDashboard();
+});
+    </script>
+    <!-- END: Embedded main.js logic -->
+	
+</body>
+</html>
