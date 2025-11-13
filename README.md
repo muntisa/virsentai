@@ -7,9 +7,11 @@
 
 **> Autonomous Zoonotic Virus Surveillance Platform**
 
-Advanced AI protection against human threats by autonomous scanning for new viruses. Publicly funded academic research, developed in the European Union (EU).
+Advanced AI protection against human threats by autonomous scanning for new zoonotic viruses and drug repurposing. Publicly funded academic research, developed in the European Union (EU).
 
-Viral Sentry AI is a cutting-edge platform designed to predict zoonotic potential in viruses, helping to identify emerging threats to public health. At its core is the VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code and models publicly available on GitHub and Hugging Face.
+Viral Sentry AI is a cutting-edge platform designed to predict zoonotic potential in viruses, helping to identify emerging threats to public health and proposing drugs repurposing. At its core is the VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL drugs. 
+
+Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
 
 ## Our Team
 Cristian R. Munteanu
