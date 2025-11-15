@@ -65,15 +65,13 @@
     </style>
     <script>      // Data from summary_stats.json embedded directly
       const summaryStats = {
-          "Total Scanned Viruses": 21519,
-          "Zoonotic Viruses": 217,
+          "Total Scanned Viruses": 15930,
+          "Zoonotic Viruses": 49,
           "Monthly New Cases": {
-                    "2025-05": 1,
-                    "2025-06": 3,
-                    "2025-07": 71,
-                    "2025-08": 81,
-                    "2025-09": 37,
-                    "2025-10": 24
+                    "2025-07": 20,
+                    "2025-08": 11,
+                    "2025-09": 11,
+                    "2025-10": 7
           },
           "Top Predictions": [
                     {
@@ -141,20 +139,20 @@
                               "Scan Date": "2025-07-06"
                     },
                     {
-                              "Virus ID": "AB447448.1",
-                              "Virus Name": "Norovirus Hu/GII-4/Sakai2/2006/JP genomic RNA, complete genome",
-                              "Virus Host": "**Homo sapiens",
-                              "Database": "VirusHostDB",
-                              "Probability": 0.9763,
-                              "Scan Date": "2025-09-16"
-                    },
-                    {
                               "Virus ID": "NC_001753.1",
                               "Virus Name": "Clover yellow mosaic virus, complete genome",
                               "Virus Host": "Unknown",
                               "Database": "VirusHostDB",
                               "Probability": 0.9763,
                               "Scan Date": "2025-07-25"
+                    },
+                    {
+                              "Virus ID": "NC_002205.1",
+                              "Virus Name": "Influenza B virus (B/Lee/1940)",
+                              "Virus Host": "Unknown",
+                              "Database": "NCBI",
+                              "Probability": 0.9758,
+                              "Scan Date": "2025-09-12"
                     }
           ]
 };// Function to populate the data on window load
@@ -313,7 +311,8 @@
               <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">virsentai</h2>
             </div>
             <div class="flex items-center gap-9">
-              <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Overview</a> 
+              <a class="text-[#ff0000] text-sm font-bold leading-normal"   href="#">Overview</a> <!-- Active Link -->	
+			  <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./repurposing.html">Drug Repurposing</a> 		  
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
             </div>
@@ -325,7 +324,7 @@
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <div class="flex min-w-72 flex-col gap-3">
                 <p class="text-white tracking-light text-[32px] font-bold leading-tight">Viral Sentry AI – Autonomous Zoonotic Virus Surveillance</p>
-                <p class="text-[#9cabba] text-base font-normal leading-relaxed">We use advanced AI models to autonomously scan new viral complete genomes and predict their risk of human infection. Publicly funded academic research, developed in the European Union.</p>
+                <p class="text-[#9cabba] text-base font-normal leading-relaxed">We use advanced AI models to autonomously scan new viral complete genomes, predict their risk of human infection, and propose drug repurposing for the viral proteins. Publicly funded academic research, developed in the European Union.</p>
               </div>
             </div>
 
@@ -420,7 +419,8 @@
             <div class="px-4 pt-2 pb-5">
 				<p class="text-[#9cabba] text-xs text-center">* Virus host considered Unknown to test predictions.</p>
 				<p class="text-[#9cabba] text-xs text-center">** Virus host missing in NCBI but corrected with local Gemini-2 (gemma-2-9b-it-Q4_K_M.gguf in LM Studio) using two NCBI fields (DEFINITION and TITLE of the first publication).</p>
-                <p class="text-[#9cabba] text-xs text-center">Disclaimer: virsentai is an AI model trained on complete viral genomes; practical laboratory experiments are required to confirm its results.</p>
+                <p class="text-[#9cabba] text-xs text-center">Zoonotic Predicted Probability Cutoff: 90%</p>
+				<p class="text-[#9cabba] text-xs text-center">Disclaimer: virsentai is an AI model trained on complete viral genomes; practical laboratory experiments are required to confirm its results.</p>
             </div>
             
             <footer class="text-center text-[#9cabba] py-8 mt-6">
