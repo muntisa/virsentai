@@ -2,13 +2,15 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445222.svg)](https://doi.org/10.5281/zenodo.17445222)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17450943.svg)](https://doi.org/10.5281/zenodo.17450943)
 
-# VirSentAI - Viral Sentry AI
+# Viral Sentry AI (VirSentAI)
 
-**> Autonomous Zoonotic Virus Surveillance Platform**
+**> Automated Zoonotic Surveillance & Drug Repurposing Agent**
 
 Advanced AI protection against human threats by autonomous scanning for new zoonotic viruses and drug repurposing. Publicly funded academic research, developed in the European Union (EU).
 
-Viral Sentry AI is a cutting-edge platform designed to predict zoonotic potential in viruses, helping to identify emerging threats to public health and proposing drugs repurposing. At its core is the VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL drugs. 
+VirSentAI is a multimodal agent for zoonotic defense & therapeutic data fusion, an autonomous, tri-model agent designed to close the gap between viral emergence and therapeutic response. It orchestrates a unified surveillance workflow by continuously synthesizing intelligence from three specialized AI architectures: Gemma-2-9b (for context extraction), HyenaDNA (for genomic risk prediction), and PLAPT (for chemical affinity screening). This end-to-end data fusion transforms raw genomic sequences and unstructured text into actionable therapeutic candidates, providing a scalable solution for proactive pandemic preparedness.
+
+Viral Sentry AI is a cutting-edge platform with the core as the new VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL approved drugs. 
 
 Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
 
