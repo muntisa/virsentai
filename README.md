@@ -6,6 +6,9 @@
 
 **> Automated Zoonotic Surveillance & Drug Repurposing Agent**
 
+<img src="docs/img/virus.png" alt="Virus illustration" width="25%" style="border-radius: 15px;">
+
+
 Advanced AI protection against human threats by autonomous scanning for new zoonotic viruses and drug repurposing. Publicly funded academic research, developed in the European Union (EU).
 
 VirSentAI is a multimodal agent for zoonotic defense & therapeutic data fusion, an autonomous, tri-model agent designed to close the gap between viral emergence and therapeutic response. It orchestrates a unified surveillance workflow by continuously synthesizing intelligence from three specialized AI architectures:
