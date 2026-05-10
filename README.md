@@ -18,7 +18,7 @@ VirSentAI is a multimodal agent for zoonotic defense & therapeutic data fusion, 
 
 This end-to-end data fusion transforms raw genomic sequences and unstructured text into actionable therapeutic candidates, providing a scalable solution for proactive pandemic preparedness.
 
-Viral Sentry AI is a cutting-edge platform with the core as the new VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL approved drugs. 
+Viral Sentry AI is a research prototype with the core as the new VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL approved drugs. All the predictions should be verified with other computational methods and experimental methods.
 
 Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
 
