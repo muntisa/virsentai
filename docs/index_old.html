@@ -65,7 +65,7 @@
     </style>
     <script>      // Data from summary_stats.json embedded directly
       const summaryStats = {
-          "Total Scanned Viruses": 506,
+          "Total Scanned Viruses": 481,
           "Zoonotic Viruses": 2,
           "Monthly New Cases": {
                     "2026-04": 2
@@ -188,10 +188,14 @@
             const data = [{
                 x: plotLabels,
                 y: caseCounts,
-                type: 'bar',
-                marker: {
-                    color: '#ff0000'
+                type: 'scatter',
+                mode: 'lines',
+                line: {
+                    color: '#ff0000', // Red line
+                    width: 3
                 },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(255, 0, 0, 0.15)', // Semi-transparent red fill
                 hovertemplate: '<b>%{y}</b> Cases<extra></extra>',
             }];
 
@@ -241,10 +245,9 @@
             </div>
             <div class="flex items-center gap-9">
               <a class="text-[#ff0000] text-sm font-bold leading-normal"   href="#">Overview</a> <!-- Active Link -->	
-			  <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./repurposing.html">Drug Repurposing</a>
-              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./taxonomy_dashboard.html">Dataset Taxonomy</a>
-              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
+			  <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./repurposing.html">Drug Repurposing</a> 		  
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
             </div>
           </div>
         </header>
@@ -255,7 +258,7 @@
               <div class="flex min-w-72 flex-col gap-3">
                 <p class="text-white tracking-light text-[32px] font-bold leading-tight">Viral Sentry AI (VirSentAI)</p>
 				<p class="text-white tracking-light text-[18px] font-bold leading-tight">Automated Zoonotic Surveillance & Drug Repurposing Agent</p>
-                <p class="text-[#9cabba] text-base font-normal leading-relaxed">VirSentAI is a multimodal research prototype designed to explore the fusion of zoonotic data for therapeutic hypothesis generation. By integrating local Gemma 4 E4B (host search), a fine tunned HyenaDNA (genomic risk), and a pretrained PLAPT (drug - viral protein affinity screening), the framework orchestrates an experimental workflow to prioritize potential leads from raw genomic and textual data. This system is intended as a hypothesis-generating tool to support pandemic preparedness. Therefore, its computational outputs require rigorous structural and experimental validation to confirm biological plausibility and therapeutic potential.</p>
+                <p class="text-[#9cabba] text-base font-normal leading-relaxed">VirSentAI is a multimodal research prototype designed to explore the fusion of zoonotic data for therapeutic hypothesis generation. By integrating Gemma 4 (host search), HyenaDNA (genomic risk), and PLAPT (affinity screening), the framework orchestrates an experimental workflow to prioritize potential leads from raw genomic and textual data. This system is intended as a hypothesis-generating tool to support pandemic preparedness; as such, its computational outputs require rigorous structural and experimental validation to confirm biological plausibility and therapeutic potential.</p>
               </div>
             </div>
 

@@ -12,7 +12,7 @@
 Advanced AI protection against human threats by autonomous scanning for new zoonotic viruses and drug repurposing. Publicly funded academic research, developed in the European Union (EU).
 
 VirSentAI is a multimodal agent for zoonotic defense & therapeutic data fusion, an autonomous, tri-model agent designed to close the gap between viral emergence and therapeutic response. It orchestrates a unified surveillance workflow by continuously synthesizing intelligence from three specialized AI architectures:
-- Model 1: MedGemma LLM for context extraction ([medgemma-4b-it-Q8_0](https://huggingface.co/lmstudio-community/medgemma-4b-it-GGUF)),
+- Model 1: Gemma4 E4B LLM for context extraction ([gemma-4-E4B-it-Q4_K_M](https://huggingface.co/lmstudio-community/gemma-4-E4B-it-GGUF)),
 - Model 2: HyenaDNA for genomic risk prediction ([hyenadna-medium-160k-seqlen-hf](https://huggingface.co/LongSafari/hyenadna-medium-160k-seqlen-hf)),
 - Model 3: [PLAPT](https://github.com/Bindwell/PLAPT) AI, a Transformer using molecular embeddings for chemical affinity screening.
 

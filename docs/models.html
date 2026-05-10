@@ -92,8 +92,9 @@
             <div class="flex items-center gap-9">
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./index.html">Overview</a>
 			  <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./repurposing.html">Drug Repurposing</a>
-              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./taxonomy_dashboard.html">Dataset Taxonomy</a>
               <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Models</a>
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
             </div>
           </div>
         </header>
@@ -102,7 +103,7 @@
             <div class="p-4">
               <h1 class="text-white tracking-light text-[32px] font-bold leading-tight mb-4">Our Model: VirSentAI</h1>
               <p class="text-[#9cabba] text-base font-normal leading-relaxed mb-8">
-                The Viral Sentry AI model uses machine learning to predict zoonotic potential based on viral sequences and metadata. It is designed to assist researchers and public health officials in identifying emerging threats. The VirSentAI model (virsentai-v2-hyena-dna-16k) was obtained by fine-tuning the pretrained HyenaDNA model, sourced from LongSafari/hyenadna-medium-160k-seqlen-hf. This model is capable of handling DNA sequences up to 160,000 bases long, enabling robust analysis of viral genomes.
+                The Viral Sentry AI model uses machine learning to predict zoonotic potential based on viral sequences and metadata. It is designed to assist researchers and public health officials in identifying emerging threats. The VirSentAI model (virsentai-v3-hyena-dna-16k) was obtained by fine-tuning the pretrained HyenaDNA model (LongSafari/hyenadna-medium-160k-seqlen-hf). This model is capable of handling DNA sequences up to 160,000 bases long, enabling robust analysis of viral genomes.
               </p>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 stats-grid">
@@ -110,10 +111,10 @@
                   <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Training & Hardware</h2>
                   <div class="space-y-4 text-[#9cabba]">
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
-                      <span class="font-medium">Training Dataset</span><span class="font-bold text-white">31,728 viruses</span>
+                      <span class="font-medium">Training Dataset</span><span class="font-bold text-white">33,426 viruses</span>
                     </div>
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
-                      <span class="font-medium">Training Time</span><span class="font-bold text-white">150 hours</span>
+                      <span class="font-medium">Training Time</span><span class="font-bold text-white">250 hours</span>
                     </div>
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
                       <span class="font-medium">Hardware</span><span class="font-bold text-white">NVIDIA 24G GPU</span>
@@ -121,19 +122,22 @@
                   </div>
                 </div>
                 <div>
-                  <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Model Performance</h2>
+                  <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Model Validation Performance</h2>
                   <div class="space-y-4 text-[#9cabba]">
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
-                      <span class="font-medium">Validation Accuracy</span><span class="font-bold text-white">0.8724</span>
+                      <span class="font-medium">AUROC</span><span class="font-bold text-white">0.8816</span>
                     </div>
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
-                      <span class="font-medium">Training Accuracy</span><span class="font-bold text-white">0.8789</span>
+                      <span class="font-medium">Accuracy</span><span class="font-bold text-white">0.7977</span>
                     </div>
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
-                      <span class="font-medium">Validation AUROC</span><span class="font-bold text-white">0.9496</span>
+                      <span class="font-medium">Precision</span><span class="font-bold text-white">0.8356</span>
                     </div>
                     <div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
-                      <span class="font-medium">Training AUROC</span><span class="font-bold text-white">0.9512</span>
+                      <span class="font-medium">Recall</span><span class="font-bold text-white">0.7411</span>
+                    </div>
+					<div class="flex justify-between p-4 bg-[#1b2127] rounded-lg border border-[#3b4854]">
+                      <span class="font-medium">F1-score</span><span class="font-bold text-white">0.7855</span>
                     </div>
                   </div>
                 </div>
@@ -142,16 +146,17 @@
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Dataset</h2>
               <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
                 <p><strong>Databases</strong>: <a href="https://www.ncbi.nlm.nih.gov/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">NCBI</a>, <a href="https://www.genome.jp/virushostdb/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">VirusHostDB</a>, <a href="https://www.viprbrc.org/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">Viprbrc</a></p>
-                <p><strong>Data points</strong>: 31,728 complete genomes of a balanced dataset of viruses with human and non-human hosts (maximum length of 160,000 bases).</p>
+                <p><strong>Data points</strong>: 33,426 complete genomes of a balanced dataset of viruses with human and non-human hosts (maximum length of 160,000 bases).</p>
               </div>
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Model Training Details</h2>
               <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
+			    <p><strong>Data split</strong>: 26,743 training samples (80%), 6,683 validation samples (20%).</p>
                 <p><strong>Precision</strong>: 16-bit float precision for efficient computation.</p>
-                <p><strong>Epochs</strong>: Trained for 15 epochs.</p>
+                <p><strong>Epochs</strong>: Trained for 20 epochs.</p>
                 <p><strong>Batch Size</strong>: A batch size of 2 was used.</p>
-                <p><strong>Gradient Accumulation</strong>: 8 steps. This is a key technique for training large models on limited hardware, as it accumulates gradients over several steps before performing an optimizer update.</p>
-                <p><strong>Optimizer</strong>: AdamW, an adaptive optimizer well-suited for transformer models.</p>
+                <p><strong>Gradient Accumulation</strong>: 8 / 16 steps. This is a key technique for training large models on limited hardware, as it accumulates gradients over several steps before performing an optimizer update.</p>
+                <p><strong>Optimizer</strong>: adamw_torch_fused, an adaptive optimizer well-suited for transformer models (check the fine tuning script in the GitHub repository).</p>
               </div>
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Pre-trained HyenaDNA Model Advantages</h2>
@@ -197,7 +202,7 @@
               <ul class="list-disc list-inside space-y-2 text-[#9cabba] mb-8">
                 <li><strong>Limited training time</strong>: the AUROC plot shows that the model can still be improved.</li>
                 <li><strong>Limited sequence length</strong>: only the first 160,000 DNA bases of any viral sequence are used for prediction.</li>
-                <li><strong>Limited database scans</strong>: for the moment, VirSentAI is scanning only the NCBI database.</li>
+                <li><strong>Limited database scans</strong>: for the moment, VirSentAI is scanning only the NCBI RefSeq database.</li>
               </ul>
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">References</h2>

@@ -191,8 +191,9 @@
             <div class="flex items-center gap-9">
                 <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./index.html">Overview</a> 
                 <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Drug Repurposing</a> <!-- Active Link -->
-                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./taxonomy_dashboard.html">Dataset Taxonomy</a>
                 <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
             </div>
         </div>
         
@@ -206,7 +207,7 @@
                 
                 <h1 class="text-white tracking-light text-[32px] font-bold leading-tight mb-4">Autonomous Drug Repurposing for Zoonotic Viruses</h1>
                 <p class="text-lg  mb-6 max-w-3xl mx-auto text-[#9cabba]">
-                    Explore virus-protein-drug interactions through negative log affinity energies calculated with <a href="https://github.com/trrt-good/WELP-PLAPT" target="_blank">PLAPT</a> pre-trained deep learning model based on drug and protein embeddings. Interactive visualizations reveal potential drug repurposing opportunities.
+                    Explore virus-protein-drug interactions through negative log affinity energies calculated with <a href="https://github.com/trrt-good/WELP-PLAPT" target="_blank">PLAPT</a> pre-trained deep learning model based on drug and protein embeddings. Interactive visualizations reveal potential drug repurposing opportunities. These predictions require experimental validation to confirm the therapeutic potential.
                 </p>
 				
                 <div class="flex justify-center space-x-4">
@@ -390,141 +391,50 @@
     <script>
         // MODIFIED HEADER: virus_id,virus_name,protein_id,protein_name,drug_ID,drug_name,neg_log10_affinity_M (7 columns)
         window.RAW_CSV_DATA = `virus_id,virus_name,protein_id,protein_name,drug_ID,drug_name,neg_log10_affinity_M
-NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,"polyprotein, partial",CHEMBL17879,MARALIXIBAT CHLORIDE,11.566658020019531
-NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,"polyprotein, partial",CHEMBL17879,MARALIXIBAT CHLORIDE,11.527618408203125
-NC_001753.1,Clover yellow mosaic virus,NP_077083.1,coat protein,CHEMBL17879,MARALIXIBAT CHLORIDE,11.485185623168945
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40947.1,DNA pilot protein,CHEMBL17879,MARALIXIBAT CHLORIDE,11.426803588867188
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40948.1,hypothetical protein,CHEMBL17879,MARALIXIBAT CHLORIDE,11.375601768493652
-NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,"polyprotein, partial",CHEMBL17879,MARALIXIBAT CHLORIDE,11.297192573547363
-NC_043142.1,Carrot virus Y,YP_009665126.1,"polyprotein, partial",CHEMBL2396661,ALPELISIB,11.027535438537598
-NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,"polyprotein, partial",CHEMBL17879,MARALIXIBAT CHLORIDE,11.001254081726074
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_006491215.1,NS4 protein,CHEMBL2396661,ALPELISIB,10.998418807983398
-NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,fusolin precursor,CHEMBL2396661,ALPELISIB,10.99389934539795
-NC_001753.1,Clover yellow mosaic virus,NP_077082.1,'8 KDa' triple gene block protein,CHEMBL2396661,ALPELISIB,10.986658096313477
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40952.1,internal scaffolding protein,CHEMBL2396661,ALPELISIB,10.978578567504883
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40949.1,hypothetical protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.975711822509766
-NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,"DNA-directed RNA polymerase subunit, partial",CHEMBL2396661,ALPELISIB,10.961854934692383
-NC_007664.1,Yunnan orbivirus,YP_443933.1,VP6,CHEMBL2396661,ALPELISIB,10.956543922424316
-NC_043139.1,Araujia mosaic virus,YP_009665123.1,"polyprotein, partial",CHEMBL17879,MARALIXIBAT CHLORIDE,10.935457229614258
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL3039508,NALDEMEDINE TOSYLATE,10.927155494689941
-NC_007664.1,Yunnan orbivirus,YP_006491217.1,NS4 protein,CHEMBL2396661,ALPELISIB,10.924732208251953
-NC_001753.1,Clover yellow mosaic virus,NP_077081.1,'12 KDa' triple gene block protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.90025520324707
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40954.1,replication initiator protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.891688346862793
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40951.1,hypothetical protein,CHEMBL2396661,ALPELISIB,10.887876510620117
-NC_004199.1,Kadipiro virus chromosome segment 12,NP_694457.1,vp12,CHEMBL2396661,ALPELISIB,10.830513954162598
-FR823510.2,Bhendi yellow vein mosaic virus-associated DNA-beta complete genome,CBZ47002.1,C1 protein,CHEMBL2396661,ALPELISIB,10.82614803314209
-NC_011502.2,Rotavirus A segment 8,YP_002302221.1,NSP2,CHEMBL17879,MARALIXIBAT CHLORIDE,10.824495315551758
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40950.1,hypothetical protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.817251205444336
-NC_001753.1,Clover yellow mosaic virus,NP_077080.1,'25 KDa' movement protein,CHEMBL2396661,ALPELISIB,10.815774917602539
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_460043.1,VP6,CHEMBL2396661,ALPELISIB,10.799246788024902
-NC_038951.1,Wound tumor virus,YP_009508279.1,Pns 12 protein,CHEMBL2396661,ALPELISIB,10.796321868896484
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40950.1,hypothetical protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.795991897583008
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40954.1,replication initiator protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.772115707397461
-NC_001753.1,Clover yellow mosaic virus,NP_077081.1,'12 KDa' triple gene block protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.769255638122559
-NC_043139.1,Araujia mosaic virus,YP_009665123.1,"polyprotein, partial",CHEMBL2042122,FLUTEMETAMOL F 18,10.757996559143066
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40949.1,hypothetical protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.741344451904297
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_460043.1,VP6,CHEMBL2042122,FLUTEMETAMOL F 18,10.73873519897461
-NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,"polyprotein, partial",CHEMBL2042122,FLUTEMETAMOL F 18,10.72956657409668
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL4435170,DEUCRAVACITINIB,10.714369773864746
-FR823510.2,Bhendi yellow vein mosaic virus-associated DNA-beta complete genome,CBZ47002.1,C1 protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.71114730834961
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40950.1,hypothetical protein,CHEMBL2396661,ALPELISIB,10.67906379699707
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL1201127,DARUNAVIR ETHANOLATE,10.64840316772461
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40954.1,replication initiator protein,CHEMBL2396661,ALPELISIB,10.644828796386719
-NC_001753.1,Clover yellow mosaic virus,NP_077081.1,'12 KDa' triple gene block protein,CHEMBL2396661,ALPELISIB,10.637714385986328
-NC_043139.1,Araujia mosaic virus,YP_009665123.1,"polyprotein, partial",CHEMBL2396661,ALPELISIB,10.608657836914062
-NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,"polyprotein, partial",CHEMBL231779,APIXABAN,10.59668254852295
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40949.1,hypothetical protein,CHEMBL2396661,ALPELISIB,10.575380325317383
-NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,"polyprotein, partial",CHEMBL2396661,ALPELISIB,10.552751541137695
-NC_001753.1,Clover yellow mosaic virus,NP_077082.1,'8 KDa' triple gene block protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.538869857788086
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_460043.1,VP6,CHEMBL17879,MARALIXIBAT CHLORIDE,10.522916793823242
-NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,"polyprotein, partial",CHEMBL231779,APIXABAN,10.520588874816895
-NC_011502.2,Rotavirus A segment 8,YP_002302221.1,NSP2,CHEMBL231779,APIXABAN,10.510457992553711
-NC_043142.1,Carrot virus Y,YP_009665126.1,"polyprotein, partial",CHEMBL2042122,FLUTEMETAMOL F 18,10.4835205078125
-NC_011502.2,Rotavirus A segment 8,YP_002302221.1,NSP2,CHEMBL4802249,LENACAPAVIR SODIUM,10.472829818725586
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL17879,MARALIXIBAT CHLORIDE,10.46944522857666
-FR823510.2,Bhendi yellow vein mosaic virus-associated DNA-beta complete genome,CBZ47002.1,C1 protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.449995040893555
-NC_001753.1,Clover yellow mosaic virus,NP_077083.1,coat protein,CHEMBL231779,APIXABAN,10.425908088684082
-NC_001753.1,Clover yellow mosaic virus,NP_077083.1,coat protein,CHEMBL363392,MARALIXIBAT,10.398621559143066
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40947.1,DNA pilot protein,CHEMBL363392,MARALIXIBAT,10.390625
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_006491215.1,NS4 protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.390013694763184
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL222559,TIPRANAVIR,10.376140594482422
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL857,BIOTIN,10.375265121459961
-NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,fusolin precursor,CHEMBL2042122,FLUTEMETAMOL F 18,10.375192642211914
-NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,"polyprotein, partial",CHEMBL363392,MARALIXIBAT,10.367793083190918
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40947.1,DNA pilot protein,CHEMBL231779,APIXABAN,10.356208801269531
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40948.1,hypothetical protein,CHEMBL363392,MARALIXIBAT,10.347017288208008
-NC_011502.2,Rotavirus A segment 8,YP_002302221.1,NSP2,CHEMBL222559,TIPRANAVIR,10.341959953308105
-NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,"polyprotein, partial",CHEMBL222559,TIPRANAVIR,10.341107368469238
-NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,"polyprotein, partial",CHEMBL363392,MARALIXIBAT,10.323427200317383
-NC_011502.2,Rotavirus A segment 8,YP_002302221.1,NSP2,CHEMBL857,BIOTIN,10.295637130737305
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40952.1,internal scaffolding protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.27055549621582
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_006491215.1,NS4 protein,CHEMBL186,CEFEPIME,10.258504867553711
-NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,fusolin precursor,CHEMBL186,CEFEPIME,10.257912635803223
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40948.1,hypothetical protein,CHEMBL231779,APIXABAN,10.25688362121582
-NC_001753.1,Clover yellow mosaic virus,NP_077082.1,'8 KDa' triple gene block protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.254264831542969
-NC_043142.1,Carrot virus Y,YP_009665126.1,"polyprotein, partial",CHEMBL186,CEFEPIME,10.252388954162598
-NC_043142.1,Carrot virus Y,YP_009665126.1,"polyprotein, partial",CHEMBL17879,MARALIXIBAT CHLORIDE,10.250123023986816
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40952.1,internal scaffolding protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.245250701904297
-NC_007664.1,Yunnan orbivirus,YP_443933.1,VP6,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.242879867553711
-NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,"DNA-directed RNA polymerase subunit, partial",CHEMBL2042122,FLUTEMETAMOL F 18,10.241692543029785
-NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,"DNA-directed RNA polymerase subunit, partial",CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.239624977111816
-NC_001753.1,Clover yellow mosaic virus,NP_077082.1,'8 KDa' triple gene block protein,CHEMBL186,CEFEPIME,10.238728523254395
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_006491215.1,NS4 protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.23680591583252
-NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,fusolin precursor,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.235918998718262
-NC_043159.1,Ranunculus leaf distortion virus,YP_009665143.1,"polyprotein, partial",CHEMBL222559,TIPRANAVIR,10.234811782836914
-NC_007664.1,Yunnan orbivirus,YP_443933.1,VP6,CHEMBL2042122,FLUTEMETAMOL F 18,10.234343528747559
-NC_043363.1,Choristoneura fumiferana entomopoxvirus,YP_009665938.1,fusolin precursor,CHEMBL17879,MARALIXIBAT CHLORIDE,10.233564376831055
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_006491215.1,NS4 protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.233505249023438
-NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,"polyprotein, partial",CHEMBL2042122,FLUTEMETAMOL F 18,10.222773551940918
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40952.1,internal scaffolding protein,CHEMBL186,CEFEPIME,10.218942642211914
-NC_043142.1,Carrot virus Y,YP_009665126.1,"polyprotein, partial",CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.217806816101074
-NC_001753.1,Clover yellow mosaic virus,NP_077082.1,'8 KDa' triple gene block protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.207928657531738
-NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,"polyprotein, partial",CHEMBL363392,MARALIXIBAT,10.207571983337402
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40952.1,internal scaffolding protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.206964492797852
-NC_007664.1,Yunnan orbivirus,YP_006491217.1,NS4 protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.19124698638916
-NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,"DNA-directed RNA polymerase subunit, partial",CHEMBL17879,MARALIXIBAT CHLORIDE,10.176877975463867
-FR823510.2,Bhendi yellow vein mosaic virus-associated DNA-beta complete genome,CBZ47002.1,C1 protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.171730995178223
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL1200517,DIHYDROERGOTAMINE MESYLATE,10.171158790588379
-NC_007664.1,Yunnan orbivirus,YP_006491217.1,NS4 protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.170145034790039
-FR823510.2,Bhendi yellow vein mosaic virus-associated DNA-beta complete genome,CBZ47002.1,C1 protein,CHEMBL186,CEFEPIME,10.169586181640625
-NC_007664.1,Yunnan orbivirus,YP_443933.1,VP6,CHEMBL17879,MARALIXIBAT CHLORIDE,10.168322563171387
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_460043.1,VP6,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.165535926818848
-NC_007753.1,Peruvian horse sickness virus segment 9,YP_460043.1,VP6,CHEMBL186,CEFEPIME,10.158245086669922
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL1479,DANAZOL,10.157218933105469
-NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,"polyprotein, partial",CHEMBL231779,APIXABAN,10.150369644165039
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL1593906,LEVOPROPOXYPHENE NAPSYLATE,10.144426345825195
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL1323,DARUNAVIR,10.136407852172852
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40950.1,hypothetical protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.127913475036621
-NC_007664.1,Yunnan orbivirus,YP_006491217.1,NS4 protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.123434066772461
-NC_004053.1,Ophiostoma mitovirus 5,NP_660180.1,"RNA-dependent RNA polymerase, putative",CHEMBL2396661,ALPELISIB,10.119566917419434
-NC_074761.1,Heterocapsa circularisquama DNA virus 01,YP_010774574.1,"DNA-directed RNA polymerase subunit, partial",CHEMBL186,CEFEPIME,10.11574649810791
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40954.1,replication initiator protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.111891746520996
-NC_001753.1,Clover yellow mosaic virus,NP_077081.1,'12 KDa' triple gene block protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.109292030334473
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL46286,OMACETAXINE MEPESUCCINATE,10.10550308227539
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40950.1,hypothetical protein,CHEMBL186,CEFEPIME,10.10544490814209
-NC_043139.1,Araujia mosaic virus,YP_009665123.1,"polyprotein, partial",CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.098994255065918
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40951.1,hypothetical protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.096244812011719
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40951.1,hypothetical protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.095796585083008
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40954.1,replication initiator protein,CHEMBL186,CEFEPIME,10.092048645019531
-NC_001753.1,Clover yellow mosaic virus,NP_077081.1,'12 KDa' triple gene block protein,CHEMBL186,CEFEPIME,10.090401649475098
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40949.1,hypothetical protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.087117195129395
-NC_043139.1,Araujia mosaic virus,YP_009665123.1,"polyprotein, partial",CHEMBL186,CEFEPIME,10.084067344665527
-NC_004199.1,Kadipiro virus chromosome segment 12,NP_694457.1,vp12,CHEMBL17879,MARALIXIBAT CHLORIDE,10.0828218460083
-NC_001753.1,Clover yellow mosaic virus,NP_077083.1,coat protein,CHEMBL222559,TIPRANAVIR,10.082018852233887
-NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,"polyprotein, partial",CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.079071044921875
-NC_001753.1,Clover yellow mosaic virus,NP_077080.1,'25 KDa' movement protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.078956604003906
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40949.1,hypothetical protein,CHEMBL186,CEFEPIME,10.076634407043457
-NC_038951.1,Wound tumor virus,YP_009508279.1,Pns 12 protein,CHEMBL17879,MARALIXIBAT CHLORIDE,10.07391357421875
-NC_007664.1,Yunnan orbivirus,YP_443933.1,VP6,CHEMBL186,CEFEPIME,10.07274341583252
-NC_043160.1,Ranunculus mild mosaic virus,YP_009665144.1,"polyprotein, partial",CHEMBL64391,ITRACONAZOLE,10.072036743164062
-NC_043143.1,Ceratobium mosaic virus,YP_009665127.1,"polyprotein, partial",CHEMBL186,CEFEPIME,10.071427345275879
-NC_004053.1,Ophiostoma mitovirus 5,NP_660180.1,"RNA-dependent RNA polymerase, putative",CHEMBL17879,MARALIXIBAT CHLORIDE,10.03192138671875
-NC_004199.1,Kadipiro virus chromosome segment 12,NP_694457.1,vp12,CHEMBL2042122,FLUTEMETAMOL F 18,10.031296730041504
-PQ605478.1,Unuamitovirus alar1 isolate China-XJ20,XKQ45629.1,RNA-dependent RNA polymerase,CHEMBL17879,MARALIXIBAT CHLORIDE,10.021381378173828
-NC_043126.1,Longquan virus,YP_009664869.1,nucleocapsid,CHEMBL363392,MARALIXIBAT,10.017457008361816
-NC_001753.1,Clover yellow mosaic virus,NP_077080.1,'25 KDa' movement protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.014610290527344
-OM869523.1,Sigmofec virus UA08Rod_6044,UPW40951.1,hypothetical protein,CHEMBL3183193,CEFMENOXIME HYDROCHLORIDE,10.009384155273438
-NC_043161.1,Ranunculus mosaic virus,YP_009665145.1,"polyprotein, partial",CHEMBL2396661,ALPELISIB,10.00223159790039`;
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50089.1,nuclear export protein,CHEMBL4435170,DEUCRAVACITINIB,11.578024864196777
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL2396661,ALPELISIB,10.98637866973877
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL2396661,ALPELISIB,10.915567398071289
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50088.1,nonstructural protein 1,CHEMBL231779,APIXABAN,10.71625804901123
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.539185523986816
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50089.1,nuclear export protein,CHEMBL1479,DANAZOL,10.439741134643555
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL186,CEFEPIME,10.238701820373535
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50088.1,nonstructural protein 1,CHEMBL857,BIOTIN,10.216375350952148
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL2042122,FLUTEMETAMOL F 18,10.165594100952148
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL1075,MORICIZINE,9.9678316116333
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL4596392,CRAVACITINIB,9.939048767089844
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL546,OXPRENOLOL,9.912628173828125
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL260538,ULIPRISTAL ACETATE,9.871427536010742
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL4596392,CRAVACITINIB,9.859601020812988
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL546,OXPRENOLOL,9.834062576293945
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL1460,DIDANOSINE,9.785778999328613
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL1200334,MORICIZINE HYDROCHLORIDE,9.750190734863281
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL846,CALCITRIOL,9.737420082092285
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL260538,ULIPRISTAL ACETATE,9.733901023864746
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL186,CEFEPIME,9.692083358764648
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL231779,APIXABAN,9.5900297164917
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50089.1,nuclear export protein,CHEMBL1204165,DILEVALOL HYDROCHLORIDE,9.587235450744629
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50089.1,nuclear export protein,CHEMBL857,BIOTIN,9.518303871154785
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL846,CALCITRIOL,9.470266342163086
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL3286830,LORLATINIB,9.37714958190918
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50088.1,nonstructural protein 1,CHEMBL1580,PENTOSTATIN,9.362346649169922
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL3137320,TALAZOPARIB,9.349370002746582
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL1173655,AFATINIB,9.29415225982666
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL3137326,DEUTETRABENAZINE,9.258561134338379
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL528,CEFTIZOXIME,9.251884460449219
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL1173655,AFATINIB,9.218271255493164
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL4299851,PIFLUFOLASTAT,9.208276748657227
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50089.1,nuclear export protein,CHEMBL2110731,TOFOGLIFLOZIN ANHYDROUS,9.185983657836914
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL705,ALITRETINOIN,9.126276969909668
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL1075,MORICIZINE,9.116025924682617
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL705,ALITRETINOIN,9.115141868591309
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL1200385,ARBUTAMINE HYDROCHLORIDE,9.090839385986328
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL3286830,LORLATINIB,9.078368186950684
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL100116,PENTAZOCINE,9.077072143554688
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL1200563,CERIVASTATIN SODIUM,9.0668306350708
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177699.1,putative capsid protein,CHEMBL723,CARVEDILOL,9.065225601196289
+NC_028258,Sewage-associated circular DNA virus-2,YP_009177700.1,replication-associated protein,CHEMBL2134724,IPRATROPIUM BROMIDE,9.047473907470703
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50088.1,nonstructural protein 1,CHEMBL1276308,MIFEPRISTONE,9.009186744689941
+CY241921,Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4)),ASU50089.1,nuclear export protein,CHEMBL2105669,TEDIZOLID PHOSPHATE,9.000761032104492`;
     </script>
     
     <!-- START: Embedded main.js logic -->
@@ -1174,11 +1084,11 @@ class DrugRepurposingDashboard {
     }
 
     updateTopInteractions() {
-        const MIN_AFFINITY_THRESHOLD = 11.0;
+        const MIN_AFFINITY_THRESHOLD = 9.0;
         const highAffinityData = this.filteredData.filter(d => d.neg_log10_affinity_M >= MIN_AFFINITY_THRESHOLD);
         const topData = highAffinityData
             .sort((a, b) => b.neg_log10_affinity_M - a.neg_log10_affinity_M)
-            .slice(0, 30);
+            .slice(0, 10);
 
         if (topData.length === 0) {
             const option = {

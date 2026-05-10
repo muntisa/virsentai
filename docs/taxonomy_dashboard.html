@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxonomy Dashboard - VirSeNtAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #111518;
+            --border-dark: #2d363d;
+            --accent-red: #ff0000;
+            --accent-cyan: #00bcd4;
+            --text-faded: #9cabba;
+            --text-strong: white;
+            --card-bg-dark: #1b2127;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: var(--card-bg-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 0.75rem;
+        }
+        .chart-container {
+            height: 500px;
+            position: relative;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2d363d] px-10 py-3">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-white">
+                <span class="text-[#ff0000] text-xl font-extrabold leading-none">></span>
+                <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">virsentai</h2>
+            </div>
+            <div class="flex items-center gap-9">
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./index.html">Overview</a>
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./repurposing.html">Drug Repurposing</a>
+                <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">Dataset Taxonomy</a>
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
+                <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./about.html">About</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-white tracking-light text-[32px] font-bold leading-tight mb-2">Training Dataset Taxonomy Analysis</h1>
+            <p class="text-[#9cabba] text-base">Comprehensive breakdown of the balanced dataset used to train VirSeNtAI</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+            <div class="stat-card glass-card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-white" id="stat-total">0</div>
+                <div class="text-xs text-[#9cabba] uppercase tracking-wide">Total Sequences</div>
+            </div>
+            <div class="stat-card glass-card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-[#00bcd4]" id="stat-zoonotic">0</div>
+                <div class="text-xs text-[#9cabba] uppercase tracking-wide">Zoonotic (label=1)</div>
+            </div>
+            <div class="stat-card glass-card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-[#ff0000]" id="stat-non-zoonotic">0</div>
+                <div class="text-xs text-[#9cabba] uppercase tracking-wide">Non-Zoonotic (label=0)</div>
+            </div>
+            <div class="stat-card glass-card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-white" id="stat-sources">0</div>
+                <div class="text-xs text-[#9cabba] uppercase tracking-wide">Data Sources</div>
+            </div>
+            <div class="stat-card glass-card rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-white" id="stat-species">0</div>
+                <div class="text-xs text-[#9cabba] uppercase tracking-wide">Unique Species</div>
+            </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-4 mb-8">
+            <div class="grid grid-cols-4 gap-4 text-center">
+                <div>
+                    <div class="text-xl font-bold text-white" id="length-min">0</div>
+                    <div class="text-xs text-[#9cabba]">Min Length</div>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-white" id="length-max">0</div>
+                    <div class="text-xs text-[#9cabba]">Max Length</div>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-white" id="length-mean">0</div>
+                    <div class="text-xs text-[#9cabba]">Mean Length</div>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-white" id="length-median">0</div>
+                    <div class="text-xs text-[#9cabba]">Median Length</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Realm Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-realm" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Kingdom Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-kingdom" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Phylum Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-phylum" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Class Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-class" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Order Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-order" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Family Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-family" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Genus Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-genus" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Species Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-species" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Non-human Host Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-host" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Data Source Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <div id="chart-source" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-white font-semibold text-lg mb-4">Geographic Distribution</h2>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-white font-semibold mb-3">Top 15 Countries</h3>
+                <div id="chart-country" class="chart-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center text-[#9cabba] py-8 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>© 2025 Copyright by <a href="https://rnasa-imedir.udc.es/en/" class="text-white hover:text-[#ff0000]">RNASA</a>, <a href="https://citic.udc.es/en/home-english-2/" class="text-white hover:text-[#ff0000]">CITIC</a>, <a href="https://www.udc.es/en/" class="text-white hover:text-[#ff0000]">UDC</a>, Spain</p>
+        </div>
+    </footer>
+
+    <script>
+        const STATS = {"total": 33426, "zoonotic": 16713, "non_zoonotic": 16713, "unique_organisms": 31482, "unique_hosts": 2994, "unique_species": 4626, "length_stats": {"min": 60, "max": 159837, "mean": 7870.510590558248, "median": 2280.0, "std": 17269.15683978926, "p25": 1410.0, "p75": 6343.75}, "source_counts": {"BVBRC": 21684, "VirusHostDB": 9627, "RefSeq": 2115}, "host_counts": {"Homo sapiens": 16713, "swine": 1157, "chicken": 711, "mallard": 654, "unknown": 548, "duck": 459, "chordata": 446, "sus scrofa": 352, "peromyscus fraterculus": 278, "mycolicibacterium smegmatis mc2 155": 250, "anas platyrhynchos": 216, "neotoma bryanti": 185, "escherichia coli": 174, "dipodomys merriami": 172, "klebsiella pneumoniae": 116, "chroicocephalus ridibundus": 106, "microbacterium foliorum": 106, "staphylococcus aureus": 105, "pseudomonas aeruginosa": 102, "sus scrofa domesticus": 91, "blue winged teal": 91, "hydrochoerus hydrochaeris": 88, "gordonia terrae": 88, "ralstonia solanacearum": 86, "gallus gallus": 86}, "host_zoonotic": {"Homo sapiens": 16713}, "host_non_zoonotic": {"swine": 1157, "chicken": 711, "mallard": 654, "unknown": 548, "duck": 459, "chordata": 446, "sus scrofa": 352, "peromyscus fraterculus": 278, "mycolicibacterium smegmatis mc2 155": 250, "anas platyrhynchos": 216, "neotoma bryanti": 185, "escherichia coli": 174, "dipodomys merriami": 172, "klebsiella pneumoniae": 116, "chroicocephalus ridibundus": 106, "microbacterium foliorum": 106, "staphylococcus aureus": 105, "pseudomonas aeruginosa": 102, "sus scrofa domesticus": 91, "blue winged teal": 91}, "taxonomy_counts": {"realm": {"Riboviria": 25583, "Floreoviria": 3349, "Duplodnaviria": 3033, "Viruses": 311, "Varidnaviria": 203, "Monodnaviria": 55, "Duplornaviricota": 27, "Monjiviricetes": 15, "Defenciviricetes": 9, "Ribozyviria": 8, "Adnaviria": 7, "Kitrinoviricota": 5, "Singelaviria": 4, "Kitsenvircota": 3, "Negarnaviricota": 2}, "realm_zoonotic": {"Riboviria": 15937, "Floreoviria": 434, "Viruses": 103, "Varidnaviria": 70, "Duplodnaviria": 50, "Duplornaviricota": 16, "Monodnaviria": 11, "Defenciviricetes": 8, "Ribozyviria": 4, "Kitsenvircota": 1, "Monjiviricetes": 1}, "realm_non_zoonotic": {"Riboviria": 9646, "Duplodnaviria": 2983, "Floreoviria": 2915, "Viruses": 208, "Varidnaviria": 133, "Monodnaviria": 44, "Monjiviricetes": 14, "Duplornaviricota": 11, "Adnaviria": 7, "Kitrinoviricota": 5, "Singelaviria": 4, "Ribozyviria": 4, "Kitsenvircota": 2, "Negarnaviricota": 2, "Defenciviricetes": 1}, "kingdom": {"Orthornavirae": 24791, "Heunggongvirae": 3032, "Sangervirae": 2040, "Shotokuvirae": 1112, "Viruses": 311, "Loebvirae": 236, "Pararnavirae": 206, "Bamfordvirae": 188, "Negarnaviricota": 43, "Resentoviricetes": 24, "Trapavirae": 16, "Mononegavirales": 15, "Abadenavirae": 14, "Bacillati": 9, "Picornavirales": 9}, "kingdom_zoonotic": {"Orthornavirae": 15880, "Shotokuvirae": 363, "Viruses": 103, "Bamfordvirae": 70, "Sangervirae": 64, "Heunggongvirae": 50, "Pararnavirae": 47, "Loebvirae": 18, "Resentoviricetes": 16, "Negarnaviricota": 10, "Picornavirales": 8, "Bacillati": 6, "Metazoa": 1, "Mymiviricetes": 1, "Mononegavirales": 1}, "kingdom_non_zoonotic": {"Orthornavirae": 8911, "Heunggongvirae": 2982, "Sangervirae": 1976, "Shotokuvirae": 749, "Loebvirae": 218, "Viruses": 208, "Pararnavirae": 159, "Bamfordvirae": 118, "Negarnaviricota": 33, "Trapavirae": 16, "Abadenavirae": 14, "Mononegavirales": 14, "Resentoviricetes": 8, "Zilligvirae": 7, "Helvetiavirae": 4}, "phylum": {"Negarnaviricota": 21357, "Uroviricota": 3005, "Phixviricota": 2040, "Pisuviricota": 1987, "Kitrinoviricota": 749, "Duplornaviricota": 708, "Cossaviricota": 613, "Cressdnaviricota": 406, "Hofneiviricota": 236, "Artverviricota": 206, "Preplasmiviricota": 171, "Lenarviricota": 152, "Commensaviricota": 105, "Monjiviricetes": 45, "Haploviricotina": 32}, "phylum_zoonotic": {"Negarnaviricota": 14758, "Pisuviricota": 967, "Cossaviricota": 237, "Duplornaviricota": 156, "Commensaviricota": 87, "Phixviricota": 64, "Preplasmiviricota": 64, "Kitrinoviricota": 53, "Artverviricota": 47, "Cressdnaviricota": 40, "Uroviricota": 40, "Picornaviricota": 20, "Hofneiviricota": 18, "Reovirales": 16, "Monjiviricetes": 15}, "phylum_non_zoonotic": {"Negarnaviricota": 6599, "Uroviricota": 2965, "Phixviricota": 1976, "Pisuviricota": 1020, "Kitrinoviricota": 696, "Duplornaviricota": 552, "Cossaviricota": 376, "Cressdnaviricota": 366, "Hofneiviricota": 218, "Artverviricota": 159, "Lenarviricota": 151, "Preplasmiviricota": 107, "Monjiviricetes": 30, "Haploviricotina": 29, "Riboviria": 23}, "class": {"Insthoviricetes": 19930, "Caudoviricetes": 3005, "Microviricetes": 2040, "Pisoniviricetes": 1672, "Bunyaviricetes": 802, "Resentoviricetes": 562, "Monjiviricetes": 526, "Papovaviricetes": 454, "Alsuviricetes": 436, "Faserviricetes": 236, "Arfiviricetes": 224, "Stelpaviricetes": 212, "Revtraviricetes": 206, "Flasuviricetes": 195, "Repensiviricetes": 175}, "class_zoonotic": {"Insthoviricetes": 14598, "Pisoniviricetes": 965, "Papovaviricetes": 208, "Resentoviricetes": 150, "Bunyaviricetes": 104, "Cardeaviricetes": 87, "Microviricetes": 64, "Pharingeaviricetes": 54, "Monjiviricetes": 53, "Revtraviricetes": 47, "Caudoviricetes": 40, "Flasuviricetes": 37, "Quintoviricetes": 29, "Arfiviricetes": 24, "Stelpaviricetes": 22}, "class_non_zoonotic": {"Insthoviricetes": 5332, "Caudoviricetes": 2965, "Microviricetes": 1976, "Pisoniviricetes": 707, "Bunyaviricetes": 698, "Monjiviricetes": 473, "Alsuviricetes": 429, "Resentoviricetes": 412, "Papovaviricetes": 246, "Faserviricetes": 218, "Arfiviricetes": 200, "Stelpaviricetes": 190, "Repensiviricetes": 160, "Revtraviricetes": 159, "Flasuviricetes": 158}, "order": {"Articulavirales": 19948, "Picornavirales": 1490, "Reovirales": 601, "Mononegavirales": 474, "Elliovirales": 439, "Hareavirales": 364, "Zurhausenvirales": 314, "Tubulavirales": 236, "Autographivirales": 223, "Martellivirales": 207, "Amarillovirales": 201, "Tymovirales": 198, "Geplafuvirales": 175, "Ortervirales": 173, "Patatavirales": 159}, "order_zoonotic": {"Articulavirales": 14600, "Picornavirales": 940, "Zurhausenvirales": 181, "Reovirales": 156, "Sanitavirales": 87, "Hareavirales": 82, "Rowavirales": 64, "Mononegavirales": 51, "Amarillovirales": 37, "Blubervirales": 30, "Piccovirales": 29, "Sepolyvirales": 25, "Nidovirales": 23, "Gokushovirales": 22, "Elliovirales": 22}, "order_non_zoonotic": {"Articulavirales": 5348, "Picornavirales": 550, "Reovirales": 445, "Mononegavirales": 423, "Elliovirales": 417, "Hareavirales": 282, "Autographivirales": 222, "Tubulavirales": 218, "Martellivirales": 202, "Tymovirales": 198, "Amarillovirales": 164, "Geplafuvirales": 160, "Patatavirales": 159, "Ortervirales": 156, "Zurhausenvirales": 133}, "family": {"Orthomyxoviridae": 19942, "Caliciviridae": 817, "Picornaviridae": 507, "Sedoreoviridae": 419, "Papillomaviridae": 314, "Phenuiviridae": 289, "Peribunyaviridae": 286, "Rhabdoviridae": 258, "Inoviridae": 230, "Flaviviridae": 226, "Parvoviridae": 165, "Spinareoviridae": 160, "Potyviridae": 159, "Polyomaviridae": 137, "Tolecusatellitidae": 126}, "family_zoonotic": {"Orthomyxoviridae": 14600, "Caliciviridae": 699, "Picornaviridae": 249, "Papillomaviridae": 181, "Sedoreoviridae": 146, "Anelloviridae": 87, "Phenuiviridae": 75, "Adenoviridae": 67, "Flaviviridae": 43, "Paramyxoviridae": 32, "Hepadnaviridae": 30, "Parvoviridae": 30, "Polyomaviridae": 25, "Coronaviridae": 23, "Astroviridae": 22}, "family_non_zoonotic": {"Orthomyxoviridae": 5342, "Sedoreoviridae": 273, "Peribunyaviridae": 266, "Picornaviridae": 258, "Rhabdoviridae": 254, "Phenuiviridae": 214, "Inoviridae": 212, "Flaviviridae": 183, "Potyviridae": 159, "Spinareoviridae": 150, "Parvoviridae": 135, "Papillomaviridae": 133, "Tolecusatellitidae": 126, "Geminiviridae": 125, "Caliciviridae": 118}, "genus": {"Alphainfluenzavirus": 15420, "Betainfluenzavirus": 4411, "Microvirus": 818, "Norovirus": 703, "Orthobunyavirus": 261, "Enterovirus": 256, "Rotavirus": 229, "Phlebovirus": 133, "Orbivirus": 132, "Potyvirus": 131, "Inovirus": 131, "Betasatellite": 119, "Begomovirus": 112, "Emaravirus": 88, "Mastadenovirus": 88}, "genus_zoonotic": {"Alphainfluenzavirus": 10141, "Betainfluenzavirus": 4405, "Norovirus": 672, "Enterovirus": 211, "Rotavirus": 123, "Alphapapillomavirus": 68, "Mastadenovirus": 67, "Gammapapillomavirus": 61, "Gammainfluenzavirus": 54, "Betapapillomavirus": 45, "Bandavirus": 45, "Orthohepadnavirus": 30, "Sapovirus": 27, "Orthohepacivirus": 25, "Phlebovirus": 25}, "genus_non_zoonotic": {"Alphainfluenzavirus": 5279, "Microvirus": 818, "Orthobunyavirus": 241, "Potyvirus": 131, "Betasatellite": 119, "Inovirus": 113, "Begomovirus": 112, "Orbivirus": 111, "Phlebovirus": 108, "Rotavirus": 106, "Emaravirus": 88, "Orthoflavivirus": 77, "Badnavirus": 62, "Orthonairovirus": 60, "Skunavirus": 60}, "species": {"Alphainfluenzavirus influenzae": 15383, "Betainfluenzavirus influenzae": 4409, "Norovirus norwalkense": 692, "Rotavirus alphagastroenteritidis": 112, "Gammainfluenzavirus influenzae": 58, "Enterovirus betacoxsackie": 58, "Gequatrovirus G4": 47, "Enterovirus alpharhino": 45, "Sapovirus sapporoense": 43, "Bandavirus dabieense": 41, "Rotavirus A": 36, "Influenza A virus": 34, "Orthohepadnavirus hominoidei": 30, "Enterovirus C": 25, "Enterovirus A": 25}, "species_zoonotic": {"Alphainfluenzavirus influenzae": 10135, "Betainfluenzavirus influenzae": 4403, "Norovirus norwalkense": 667, "Rotavirus alphagastroenteritidis": 93, "Gammainfluenzavirus influenzae": 54, "Enterovirus betacoxsackie": 45, "Enterovirus alpharhino": 44, "Bandavirus dabieense": 39, "Orthohepadnavirus hominoidei": 30, "Enterovirus C": 25, "Enterovirus A": 25, "Rotavirus A": 24, "Mastadenovirus dominans": 24, "Orthohepacivirus hominis": 23, "Betapapillomavirus 2": 21}, "species_non_zoonotic": {"Alphainfluenzavirus influenzae": 5248, "Gequatrovirus G4": 47, "Influenza A virus": 28, "Sapovirus sapporoense": 28, "Norovirus norwalkense": 25, "Rotavirus alphagastroenteritidis": 19, "Sinsheimervirus phiX174": 16, "Enterovirus betacoxsackie": 13, "Rotavirus A": 12, "Alphapapillomavirus 12": 11, "Deltainfluenzavirus influenzae": 11, "Barbavirus barba18A": 10, "Aphthovirus vesiculae": 10, "Nanovirus trifolii": 10, "Betacoronavirus pandemicum": 9}}, "completeness": {"complete": 33426}, "country_counts": {"Unknown": 434, "China": 272, "USA": 215, "Brazil": 99, "Italy": 47, "Australia": 47, "Germany": 40, "Canada": 29, "South Africa": 25, "Japan": 24, "Panama": 23, "Spain": 21, "Uganda": 19, "Colombia": 17, "United Kingdom": 17, "Kenya": 16, "Peru": 16, "Netherlands": 15, "New Zealand": 14, "Central African Republic": 14, "France": 13, "Nigeria": 13, "Malaysia": 13, "Belgium": 13, "Turkey": 13}};
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function createHorizontalBarChart(elementId, data, title) {
+            const chart = echarts.init(document.getElementById(elementId));
+            const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    backgroundColor: 'rgba(0,0,0,0.7)',
+                    textStyle: { color: '#fff' }
+                },
+                grid: { left: '3%', right: '10%', bottom: '3%', top: '3%', containLabel: true },
+                xAxis: {
+                    type: 'value',
+                    axisLabel: { color: '#9cabba', fontSize: 10 },
+                    splitLine: { lineStyle: { color: '#2d363d' } }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: sorted.map(([name]) => name.length > 25 ? name.substring(0, 25) + '...' : name).reverse(),
+                    axisLabel: { color: '#9cabba', fontSize: 10 },
+                    axisLine: { lineStyle: { color: '#2d363d' } }
+                },
+                series: [{
+                    type: 'bar',
+                    data: sorted.map(([, value]) => value).reverse(),
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                            { offset: 0, color: '#ff0000' },
+                            { offset: 1, color: '#ff6666' }
+                        ]),
+                        borderRadius: [0, 4, 4, 0]
+                    },
+                    barWidth: '60%'
+                }]
+            };
+            chart.setOption(option);
+            return chart;
+        }
+
+        function createPieChart(elementId, data, title) {
+            const chart = echarts.init(document.getElementById(elementId));
+            const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
+            const total = sorted.reduce((sum, [, v]) => sum + v, 0);
+            const topItems = sorted.slice(0, 12);
+            const othersValue = sorted.slice(12).reduce((sum, [, v]) => sum + v, 0);
+            
+            let pieData = topItems.map(([name, value]) => ({ 
+                name: name.length > 30 ? name.substring(0, 30) + '...' : name, 
+                value 
+            }));
+            
+            if (othersValue > 0) {
+                pieData.push({ name: 'Others', value: othersValue });
+            }
+            
+            const colors = [
+                '#ff0000', '#00bcd4', '#ff6666', '#00e5cc', '#ff3333', '#4dd0e1',
+                '#cc0000', '#80deea', '#ff9999', '#b2ebf2', '#ffcccc', '#e0f7fa',
+                '#666666'
+            ];
+            
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    textStyle: { color: '#fff', fontSize: 12 },
+                    formatter: function(params) {
+                        const pct = ((params.value / total) * 100).toFixed(1);
+                        return `<b>${params.name}</b><br/>Count: ${params.value}<br/>Percentage: ${pct}%`;
+                    }
+                },
+                legend: {
+                    show: true,
+                    orient: 'vertical',
+                    right: '5%',
+                    top: 'center',
+                    textStyle: { color: '#9cabba', fontSize: 11 },
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 8
+                },
+                series: [{
+                    type: 'pie',
+                    radius: ['25%', '60%'],
+                    center: ['40%', '50%'],
+                    avoidLabelOverlap: true,
+                    data: pieData,
+                    label: {
+                        show: true,
+                        position: 'outside',
+                        color: '#9cabba',
+                        fontSize: 11,
+                        formatter: '{b}: {c}'
+                    },
+                    itemStyle: {
+                        borderRadius: 4,
+                        borderColor: '#111518',
+                        borderWidth: 1
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        },
+                        label: {
+                            show: true,
+                            fontSize: 12,
+                            fontWeight: 'bold',
+                            color: '#fff',
+                            formatter: '{b}: {c} ({d}%)'
+                        }
+                    },
+                    labelLine: {
+                        show: true,
+                        lineStyle: { color: '#9cabba' }
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                }]
+            };
+            chart.setOption(option);
+            return chart;
+        }
+
+        const charts = [];
+
+        function initCharts() {
+            charts.push(createPieChart('chart-realm', STATS.taxonomy_counts.realm, 'Realm'));
+            charts.push(createPieChart('chart-kingdom', STATS.taxonomy_counts.kingdom, 'Kingdom'));
+            charts.push(createPieChart('chart-phylum', STATS.taxonomy_counts.phylum, 'Phylum'));
+            charts.push(createPieChart('chart-class', STATS.taxonomy_counts['class'], 'Class'));
+            charts.push(createPieChart('chart-order', STATS.taxonomy_counts.order, 'Order'));
+            charts.push(createPieChart('chart-family', STATS.taxonomy_counts.family, 'Family'));
+            charts.push(createPieChart('chart-genus', STATS.taxonomy_counts.genus, 'Genus'));
+            charts.push(createPieChart('chart-species', STATS.taxonomy_counts.species, 'Species'));
+            const nonHumanHosts = Object.fromEntries(
+                Object.entries(STATS.host_counts)
+                    .filter(([key]) => key.toLowerCase() !== 'homo sapiens')
+                    .sort((a, b) => b[1] - a[1])
+            );
+            charts.push(createPieChart('chart-host', nonHumanHosts, 'Non-Human Host'));
+            charts.push(createPieChart('chart-source', STATS.source_counts, 'Source'));
+            charts.push(createHorizontalBarChart('chart-country', STATS.country_counts, 'Country'));
+        }
+
+        function updateStats() {
+            document.getElementById('stat-total').textContent = formatNumber(STATS.total);
+            document.getElementById('stat-zoonotic').textContent = formatNumber(STATS.zoonotic);
+            document.getElementById('stat-non-zoonotic').textContent = formatNumber(STATS.non_zoonotic);
+            document.getElementById('stat-sources').textContent = Object.keys(STATS.source_counts).length;
+            document.getElementById('stat-species').textContent = formatNumber(STATS.unique_species);
+            document.getElementById('length-max').textContent = formatNumber(STATS.length_stats.max);
+            document.getElementById('length-min').textContent = formatNumber(STATS.length_stats.min);
+            document.getElementById('length-mean').textContent = formatNumber(Math.round(STATS.length_stats.mean));
+            document.getElementById('length-median').textContent = formatNumber(Math.round(STATS.length_stats.median));
+        }
+
+        window.addEventListener('resize', () => {
+            charts.forEach(chart => chart && chart.resize());
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStats();
+            initCharts();
+        });
+    </script>
+</body>
+</html>

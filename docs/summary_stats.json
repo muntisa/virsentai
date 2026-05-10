@@ -1,0 +1,25 @@
+{
+    "Total Scanned Viruses": 506,
+    "Zoonotic Viruses": 2,
+    "Monthly New Cases": {
+        "2026-04": 2
+    },
+    "Top Predictions": [
+        {
+            "Virus ID": "CY241921",
+            "Virus Name": "Influenza A virus (A/environment/New Jersey/UGAI16-2568/2016(H10N4))",
+            "Virus Host": "Unknown",
+            "Database": "BVBRC",
+            "Probability": 0.82810634,
+            "Scan Date": "2026-04-26"
+        },
+        {
+            "Virus ID": "NC_028258",
+            "Virus Name": "Sewage-associated circular DNA virus-2",
+            "Virus Host": "Unknown",
+            "Database": "VirusHostDB",
+            "Probability": 0.80746067,
+            "Scan Date": "2026-04-26"
+        }
+    ]
+}

@@ -92,8 +92,9 @@
             <div class="flex items-center gap-9">
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./index.html">Overview</a>
 			  <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./repurposing.html">Drug Repurposing</a>
-              <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">About</a>
+              <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./taxonomy_dashboard.html">Dataset Taxonomy</a>
               <a class="text-[#9cabba] text-sm font-medium leading-normal" href="./models.html">Models</a>
+              <a class="text-[#ff0000] text-sm font-bold leading-normal" href="#">About</a>
             </div>
           </div>
         </header>
@@ -108,18 +109,19 @@
 					<img alt="Release DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.17445222.svg"></a>
 				Preprint<a href="https://doi.org/10.5281/zenodo.17450943">
 					<img alt="Preprint DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.17450943.svg"></a></br>
-                Viral Sentry AI is a cutting-edge platform designed to predict zoonotic potential in viruses, helping to identify emerging threats to public health. At its core is the VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. A LLM is used to understand the virus host if it is not present into the NCBI fields. For each possible zoonotic virus, a drug repurposing is done using PLAPT pre-trained models that is able to calculate the affiniy energy interactions between all the ChEMBL drugs and viral proteins. Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
+                Viral Sentry AI is a research prototype designed to explore the prediction of zoonotic potential in viruses and assist in identifying hypothetical threats to public health. At its core is VirSentAI, an architecture fine-tuned from the pretrained HyenaDNA model to investigate human host tropism. The framework is engineered to scan public DNA databases for new viral sequences and metadata, utilizing a local Large Language Model (LLM) with Web search plugin to infer host context when the host is unknown. For viruses identified with potential zoonotic risk, the system conducts exploratory drug repurposing via PLAPT to estimate affinity interactions between ChEMBL-indexed compounds and viral proteins. Our goal is to leverage AI and bioinformatics to provide preliminary computational leads for the research community. As a tool for hypothesis generation, all VirSentAI predictions—particularly those regarding therapeutic prioritization—require rigorous structural and experimental validation to confirm biological plausibility. In support of transparent research, the VirSentAI code is available as open-source software on GitHub.
               </p>
 
               <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Web Framework</h2>
               <div class="space-y-3 mb-8 text-[#9cabba] text-base font-normal leading-relaxed">
                 <p><strong>Backend language</strong>: Python</p>
                 <p><strong>Database</strong>: SQLite</p>
-                <p><strong>Frontend</strong>: HTML, JavaScript, Plotly, etc.</p>
-                <p><strong>Scanned database</strong>: NCBI - <a href="https://www.ncbi.nlm.nih.gov/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">https://www.ncbi.nlm.nih.gov/</a></p>
+                <p><strong>Frontend</strong>: HTML, JavaScript, Plotly, ECharts, etc.</p>
+                <p><strong>Scanned database</strong>: NCBI-RefSeq - <a href="https://www.ncbi.nlm.nih.gov/" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">https://www.ncbi.nlm.nih.gov/</a></p>
+				<p><strong>AI tools</strong>: Open Code, Google Antigravity, Claude, Gemini, GLM.</p>
                 <p><strong>Virsentai Input Data</strong>: The model is fed the complete DNA sequences of newly discovered viruses that have so far only been found in animals or other non-human hosts.</p>
                 <p><strong>Virsentai Model Output</strong>: The model predicts the likelihood that the virus can cross over and infect humans, flagging it as a potential zoonotic risk.</p>
-				<p><strong>LLM to correct hosts</strong>:  MedGemma (medgemma-4b-it-Q8_0.gguf in LM Studio) using two NCBI fields (DEFINITION and TITLE of the first publication).</p>
+				<p><strong>LLM to correct hosts</strong>:  gemma-4-E4B-it-Q4_K_M.gguf in LM Studio, using a Web search plugin.</p>
 				<p><strong>PLAPT pre-trained model</strong>: Automatic drug repurposing by calculating affinity energy interactions between current drugs and the proteins of the possible zoonotic viruses. Learn more about PLAPT on 
 				  <a href="https://github.com/trrt-good/WELP-PLAPT" target="_blank" class="text-cyan-400 hover:text-[#ff0000]">https://github.com/trrt-good/WELP-PLAPT</a>.</p>
               </div>
