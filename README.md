@@ -22,7 +22,7 @@ Viral Sentry AI is a research prototype with the core as the new VirSentAI model
 
 Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
 
-## File Structure
+## File Structure of scripts
 
 ### Download raw data
 
