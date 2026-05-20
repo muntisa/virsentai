@@ -17,7 +17,8 @@ VirSentAI is a multimodal agent for zoonotic defense & therapeutic data fusion, 
 - Model 2: HyenaDNA for genomic risk prediction ([hyenadna-medium-160k-seqlen-hf](https://huggingface.co/LongSafari/hyenadna-medium-160k-seqlen-hf)),
 - Model 3: [PLAPT](https://github.com/Bindwell/PLAPT) AI, a Transformer using molecular embeddings for chemical affinity screening.
 
-Dataset: https://doi.org/10.5281/zenodo.20314175.
+Download the dataset with viral sequences for training and validation: https://doi.org/10.5281/zenodo.20314175.
+
 This end-to-end data fusion transforms raw genomic sequences and unstructured text into actionable therapeutic candidates, providing a scalable solution for proactive pandemic preparedness.
 
 Viral Sentry AI is a research prototype with the core as the new VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL approved drugs. All the predictions should be verified with other computational methods and experimental methods.
