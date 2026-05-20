@@ -2,6 +2,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445222.svg)](https://doi.org/10.5281/zenodo.17445222)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17450943.svg)](https://doi.org/10.5281/zenodo.17450943)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314175.svg)](https://doi.org/10.5281/zenodo.20314175)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314458.svg)](https://doi.org/10.5281/zenodo.20314458)
 
 # Viral Sentry AI (VirSentAI)
 
@@ -24,6 +25,21 @@ This end-to-end data fusion transforms raw genomic sequences and unstructured te
 Viral Sentry AI is a research prototype with the core as the new VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL approved drugs. All the predictions should be verified with other computational methods and experimental methods.
 
 Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
+
+#### Website on GitHub Pages:
+[![](https://img.shields.io/badge/View%20Project-Website-blue)](https://muntisa.github.io/virsentai)
+
+#### Software release
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445222.svg)](https://doi.org/10.5281/zenodo.17445222)
+
+#### Preprint
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17450943.svg)](https://doi.org/10.5281/zenodo.17450943)
+
+#### Dataset
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314175.svg)](https://doi.org/10.5281/zenodo.20314175)
+
+#### Model
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314458.svg)](https://doi.org/10.5281/zenodo.20314458)
 
 ## File Structure of scripts
 
