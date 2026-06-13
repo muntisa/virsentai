@@ -254,7 +254,7 @@ def fetch_virus_data():
         logging.info(f"Processed: {virus_data['Virus_ID']}, Host: {virus_data['Host']}, Registration: {virus_data['Registration_Date']}")
     
     # Filter by database
-    viruses = filter_viruses_by_db_id(viruses, SQLite_FILE)
+    viruses = filter_viruses_by_db_id(viruses, SQLite_PRED_FILE)
     
     logging.info("\n--- Final Filtered List (Viruses to Insert) ---")
     if viruses:

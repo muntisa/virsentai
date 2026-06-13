@@ -34,8 +34,7 @@ Notes:
     - No command line arguments required
     - Reads from db/virsentai.sqlite3
     - Logs to logs/04_update_webapp_<timestamp>.log
-"""
-
+    
 How to Run:
     python 04_update_webapp.py
     

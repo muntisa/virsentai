@@ -33,10 +33,7 @@ Requirements:
 Notes:
     - Maximum tokens content parameter
     - Logs to logs/01b_fetch_unknown_hosts_RefSeq_<timestamp>.log
-"""
-        
-    Note: If the output TSV file already exists, the process will be skipped.
-          Delete the file to re-run.
+    - If the output TSV file already exists, the process will be skipped. Delete the file to re-run.
 
 Requirements:
     - LM Studio server running on port 1234 (the model is not specified inside the script)

@@ -15,8 +15,8 @@ You can choose between two data sources:
 |------|--------|-------------|
 | 1 | 01a_scan_viruses_raw_RefSeq.py | Scan RefSeq for viruses, save raw data with "Unknown" for missing hosts |
 | 2 | 01b_fetch_unknown_hosts_RefSeq.py | Find hosts for "Unknown" entries using gemma4 |
-| 3 | 02_predict.py | Predict zoonotic potential using HyenaDNA model |
-| 4 | 03_add_to_db.py | Add predictions to SQLite database |
+| 3 | 02_predict_NEW_SCAN.py | Predict zoonotic potential using HyenaDNA model |
+| 4 | 03_add_to_db_NEW_SCAN.py | Add predictions to SQLite database |
 | 5 | 04_update_webapp.py | Update webapp with JSON/TSV files |
 
 ---
