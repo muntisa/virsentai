@@ -1,15 +1,13 @@
-[![](https://img.shields.io/badge/View%20Project-Website-blue)](https://muntisa.github.io/virsentai)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445222.svg)](https://doi.org/10.5281/zenodo.17445222)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17450943.svg)](https://doi.org/10.5281/zenodo.17450943)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314175.svg)](https://doi.org/10.5281/zenodo.20314175)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314458.svg)](https://doi.org/10.5281/zenodo.20314458)
-
 # Viral Sentry AI (VirSentAI)
 
 **> Automated Zoonotic Surveillance & Drug Repurposing Agent**
 
-<img src="docs/img/virus.png" alt="Virus illustration" width="25%" style="border-radius: 15px;">
+[![](https://img.shields.io/badge/View%20Project-Website-blue)](https://muntisa.github.io/virsentai) 
+[![Paper](https://img.shields.io/badge/Published%20paper-BioMethods%20bpag026-blue?logo=readme&logoColor=white)](https://academic.oup.com/biomethods/article/11/1/bpag026/8696434)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20113010.svg)](https://doi.org/10.5281/zenodo.20113010)
+
+<img src="docs/img/virus.png" alt="Virus illustration" width="25%" style="border-radius: 15px;">
 
 Advanced AI protection against human threats by autonomous scanning for new zoonotic viruses and drug repurposing. Publicly funded academic research, developed in the European Union (EU).
 
@@ -25,21 +23,6 @@ This end-to-end data fusion transforms raw genomic sequences and unstructured te
 Viral Sentry AI is a research prototype with the core as the new VirSentAI model, a unique AI model specifically fine-tuned from the pretrained HyenaDNA architecture for the task of predicting human host tropism. The platform is engineered to automatically and continuously scan public DNA databases for new viral sequences and metadata. For each virus with at least 90% of probability of human infection, the PLAPT pre-trained model is calculated the affinity energy between the viral proteins and the current ChEMBL approved drugs. All the predictions should be verified with other computational methods and experimental methods.
 
 Our mission is to leverage artificial intelligence and bioinformatics to provide actionable insights for researchers, health professionals, and policymakers. In alignment with this goal, the VirSentAI tool is free access and open-source software, with the code publicly available on GitHub.
-
-#### Website on GitHub Pages:
-[![](https://img.shields.io/badge/View%20Project-Website-blue)](https://muntisa.github.io/virsentai)
-
-#### Software release
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17445222.svg)](https://doi.org/10.5281/zenodo.17445222)
-
-#### Preprint
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17450943.svg)](https://doi.org/10.5281/zenodo.17450943)
-
-#### Dataset
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314175.svg)](https://doi.org/10.5281/zenodo.20314175)
-
-#### Model
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20314458.svg)](https://doi.org/10.5281/zenodo.20314458)
 
 ## File Structure of scripts
 
